@@ -49,13 +49,13 @@ class Curtidas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_curtida' => 'Id Curtida',
-            'usuario' => 'Usuario',
+            'id_curtida' => 'ID',
+            'usuario' => 'Usuário',
             'motivo' => 'Motivo',
-            'criado_por' => 'Criado Por',
-            'criado_em' => 'Criado Em',
-            'modificado_por' => 'Modificado Por',
-            'modificado_em' => 'Modificado Em',
+            'criado_por' => 'Criado por',
+            'criado_em' => 'Criado em',
+            'modificado_por' => 'Modificado por',
+            'modificado_em' => 'Modificado em',
             'ativo' => 'Ativo',
         ];
     }

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Curtidas */
 
-$this->title = 'Create Curtidas';
+$this->title = 'Enviar Curtidas';
 $this->params['breadcrumbs'][] = ['label' => 'Curtidas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

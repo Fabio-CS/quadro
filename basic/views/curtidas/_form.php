@@ -12,22 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'usuario')->textInput() ?>
+    <?= $form->field($model, 'usuario')->textInput() // lista de usuarios - droplist ?> 
 
     <?= $form->field($model, 'motivo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'criado_por')->textInput() ?>
-
-    <?= $form->field($model, 'criado_em')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_por')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_em')->textInput() ?>
-
-    <?= $form->field($model, 'ativo')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Enviar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

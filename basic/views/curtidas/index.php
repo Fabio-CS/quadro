@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Curtidas', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Enviar Curtidas', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -28,11 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_curtida',
             'usuario',
             'motivo',
-            'criado_por',
-            'criado_em',
-            // 'modificado_por',
-            // 'modificado_em',
-            // 'ativo',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

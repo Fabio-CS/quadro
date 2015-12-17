@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id_aviso
  * @property string $titulo
  * @property string $descricao
- * @property string $imagem
+ * @property file $imagem
  * @property integer $tempo_exibicao
  * @property string $data_inicio
  * @property string $data_fim
@@ -41,8 +41,9 @@ class Avisos extends \yii\db\ActiveRecord
         return [
             [['titulo', 'imagem', 'tempo_exibicao', 'data_inicio', 'data_fim', 'criado_por'], 'required'],
             [['tempo_exibicao', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
-            [['data_inicio', 'data_fim', 'criado_em', 'modificado_em'], 'safe'],
-            [['titulo', 'imagem'], 'string', 'max' => 100],
+            [['data_inicio', 'data_fim', 'criado_em', 'modificado_em'], 'date'],
+            [['titulo'], 'string', 'max' => 100],
+            [['imagem'], 'file'],
             [['descricao'], 'string', 'max' => 2000]
         ];
     }
