@@ -25,9 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tempo_exibicao') ?>
 
-    <?php // echo $form->field($model, 'data_inicio') ?>
+    <?= $form->field($model, 'data_inicio') ?>
 
-    <?php // echo $form->field($model, 'data_fim') ?>
+    <?= $form->field($model, 'data_fim') ?>
 
     <?php // echo $form->field($model, 'criado_por') ?>
 
@@ -40,8 +40,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'ativo') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Limpar', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

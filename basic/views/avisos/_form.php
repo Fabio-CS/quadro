@@ -20,12 +20,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tempo_exibicao')->textInput() ?>
 
-    <?= $form->field($model, 'data_inicio')->textInput() ?>
+    <?= $form->field($model, 'data_inicio')->input("date") ?>
 
-    <?= $form->field($model, 'data_fim')->textInput() ?>
+    <?= $form->field($model, 'data_fim')->input("date") ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
