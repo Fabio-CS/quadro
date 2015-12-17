@@ -24,16 +24,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'data_fim')->textInput() ?>
 
-    <?= $form->field($model, 'criado_por')->textInput() ?>
-
-    <?= $form->field($model, 'criado_em')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_por')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_em')->textInput() ?>
-
-    <?= $form->field($model, 'ativo')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

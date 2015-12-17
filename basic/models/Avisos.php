@@ -53,17 +53,17 @@ class Avisos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_aviso' => 'Id Aviso',
-            'titulo' => 'Titulo',
-            'descricao' => 'Descricao',
+            'id_aviso' => 'ID',
+            'titulo' => 'Título',
+            'descricao' => 'Descrição',
             'imagem' => 'Imagem',
-            'tempo_exibicao' => 'Tempo Exibicao',
-            'data_inicio' => 'Data Inicio',
-            'data_fim' => 'Data Fim',
-            'criado_por' => 'Criado Por',
-            'criado_em' => 'Criado Em',
-            'modificado_por' => 'Modificado Por',
-            'modificado_em' => 'Modificado Em',
+            'tempo_exibicao' => 'Tempo de exibição',
+            'data_inicio' => 'Data inicial de exibição',
+            'data_fim' => 'Data final de exibição',
+            'criado_por' => 'Criado por',
+            'criado_em' => 'Criado em',
+            'modificado_por' => 'Modificado por',
+            'modificado_em' => 'Modificado em',
             'ativo' => 'Ativo',
         ];
     }
