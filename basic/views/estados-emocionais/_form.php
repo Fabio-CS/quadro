@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Usuarios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
@@ -14,22 +15,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipo_estado_emocional')->textInput() ?>
 
-    <?= $form->field($model, 'usuario')->textInput() ?>
-
-    <?= $form->field($model, 'data')->textInput() ?>
-
-    <?= $form->field($model, 'criado_por')->textInput() ?>
-
-    <?= $form->field($model, 'criado_em')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_por')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_em')->textInput() ?>
-
-    <?= $form->field($model, 'ativo')->textInput() ?>
+    <?= $form->field($model, 'usuario')->dropdownList(
+            Usuarios::find()->select(['nome_completo', 'id'])->indexBy('nome_completo')->column(), ['prompt'=>'Selecione o Usuário']); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Inserir' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
