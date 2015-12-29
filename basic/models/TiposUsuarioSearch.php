@@ -57,7 +57,7 @@ class TiposUsuarioSearch extends TiposUsuario
 
         $query->andFilterWhere([
             'id_tipo_usuario' => $this->id_tipo_usuario,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
