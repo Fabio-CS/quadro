@@ -63,7 +63,7 @@ class TiposUsuarioController extends Controller
         $model = new TiposUsuario();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_tipo_usuario]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -98,9 +98,16 @@ class TiposUsuarioController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        //$this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
