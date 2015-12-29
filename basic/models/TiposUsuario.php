@@ -42,9 +42,9 @@ class TiposUsuario extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_tipo_usuario' => 'Id Tipo Usuario',
+            'id_tipo_usuario' => 'ID',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'ativo' => 'Ativo',
         ];
     }

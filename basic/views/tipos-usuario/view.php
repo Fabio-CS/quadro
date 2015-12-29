@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TiposUsuario */
 
-$this->title = $model->id_tipo_usuario;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Tipos de Usuários', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_tipo_usuario',
             'nome',
             'descricao',
-            'ativo',
         ],
     ]) ?>
 

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TiposUsuarioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipos Usuarios';
+$this->title = 'Tipos de Usuários';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tipos-usuario-index">
