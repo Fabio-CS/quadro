@@ -78,16 +78,16 @@ class Usuarios extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_usuario' => 'Id Usuario',
-            'num_matricula' => 'Num Matricula',
+            'id_usuario' => 'ID',
+            'num_matricula' => 'Matrícula',
             'nome_completo' => 'Nome Completo',
-            'data_nasc' => 'Data Nasc',
-            'funcao' => 'Funcao',
+            'data_nasc' => 'Data Nasc.',
+            'funcao' => 'Função',
             'setor' => 'Setor',
             'foto' => 'Foto',
-            'email' => 'Email',
+            'email' => 'E-mail',
             'senha' => 'Senha',
-            'tipo_usuario' => 'Tipo Usuario',
+            'tipo_usuario' => 'Tipo de Usuário',
             'ativo' => 'Ativo',
             'criado_por' => 'Criado Por',
             'criado_em' => 'Criado Em',

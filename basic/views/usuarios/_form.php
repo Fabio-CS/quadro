@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\TiposUsuario;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -16,32 +17,25 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome_completo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'data_nasc')->textInput() ?>
+    <?= $form->field($model, 'data_nasc')->input("date") ?>
 
     <?= $form->field($model, 'funcao')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'setor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'foto')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'foto')->fileInput() ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->input("email") ?>
 
-    <?= $form->field($model, 'senha')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'senha')->passwordInput() ?>
+    
+    <?= $form->field($model, 'confirmsenha')->passwordInput() ?>
 
-    <?= $form->field($model, 'tipo_usuario')->textInput() ?>
-
-    <?= $form->field($model, 'ativo')->textInput() ?>
-
-    <?= $form->field($model, 'criado_por')->textInput() ?>
-
-    <?= $form->field($model, 'criado_em')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_por')->textInput() ?>
-
-    <?= $form->field($model, 'modificado_em')->textInput() ?>
+    <?= $form->field($model, 'tipo_usuario')->dropdownList(
+            TiposUsuario::find()->select(['nome', 'id'])->indexBy('nome')->column(), ['prompt'=>'Selecione o tipo de usuário']); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

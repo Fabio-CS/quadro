@@ -21,19 +21,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome_completo') ?>
 
-    <?= $form->field($model, 'data_nasc') ?>
+    <?php //echo $form->field($model, 'data_nasc') ?>
 
     <?= $form->field($model, 'funcao') ?>
 
-    <?php // echo $form->field($model, 'setor') ?>
+    <?php echo $form->field($model, 'setor') ?>
 
-    <?php // echo $form->field($model, 'foto') ?>
+    <?php //echo $form->field($model, 'foto') ?>
 
-    <?php // echo $form->field($model, 'email') ?>
+    <?php //echo $form->field($model, 'email') ?>
 
     <?php // echo $form->field($model, 'senha') ?>
 
-    <?php // echo $form->field($model, 'tipo_usuario') ?>
+    <?php echo $form->field($model, 'tipo_usuario') ?>
 
     <?php // echo $form->field($model, 'ativo') ?>
 
@@ -46,8 +46,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'modificado_em') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Limpar', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
