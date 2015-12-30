@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-use app\models\TiposUsuario;
+use app\models\TiposUsuarioSearch;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -33,7 +33,7 @@ use app\models\TiposUsuario;
     <?= $form->field($model, 'confirmSenha')->passwordInput() ?>
 
     <?= $form->field($model, 'tipo_usuario')->dropdownList(
-            ArrayHelper::map(TiposUsuario::find()->all(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>
+            ArrayHelper::map(TiposUsuarioSearch::search(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

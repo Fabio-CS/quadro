@@ -59,7 +59,7 @@ class UsuariosSearch extends Usuarios
             'id_usuario' => $this->id_usuario,
             'data_nasc' => $this->data_nasc,
             'tipo_usuario' => $this->tipo_usuario,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,
             'modificado_por' => $this->modificado_por,
