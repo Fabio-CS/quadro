@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\data\ActiveDataProvider;
 use Yii;
 
 /**
@@ -55,5 +56,22 @@ class TiposUsuario extends \yii\db\ActiveRecord
     public function getUsuarios()
     {
         return $this->hasMany(Usuarios::className(), ['tipo_usuario' => 'id_tipo_usuario']);
+    }
+    
+    /**
+     * @return array of tipos de Usuários
+     */
+    public function findActives(){
+        $query = TiposUsuario::find();
+        
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        
+        $query->andFilterWhere([
+            'ativo' => 1,
+        ]);
+        
+        return $dataProvider;
     }
 }
