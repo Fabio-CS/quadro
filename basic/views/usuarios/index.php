@@ -35,12 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'foto',
             'email:email',
             // 'senha',
-            'tipo_usuario',
+            //'tipo_usuario',
             [
-                'attribute' => 'tipo_usuario',
+                'label' => 'Tipo de usuário',
                 'type' => 'html',
                 'value' => function($model) {
-                        $tipoUsuario = TiposUsuario::findModel($model->tipo_usuario);
+                        $tipoUsuario = $model->getTipoUsuario();
                         return $tipoUsuario->nome;
                 }
 	    ],
