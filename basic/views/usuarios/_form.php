@@ -33,7 +33,7 @@ use app\models\TiposUsuario;
     <?= $form->field($model, 'confirmSenha')->passwordInput() ?>
 
     <?= $form->field($model, 'tipo_usuario')->dropdownList(
-            ArrayHelper::map(TiposUsuario::findActives(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>
+            ArrayHelper::map(TiposUsuario::find()->where(['ativo' => 1])->all(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
