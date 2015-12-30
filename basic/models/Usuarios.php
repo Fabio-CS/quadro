@@ -16,6 +16,7 @@ use Yii;
  * @property string $foto
  * @property string $email
  * @property string $senha
+ * @property string $confirmSenha
  * @property integer $tipo_usuario
  * @property integer $ativo
  * @property integer $criado_por
@@ -48,6 +49,8 @@ use Yii;
  */
 class Usuarios extends \yii\db\ActiveRecord
 {
+    public $confirmSenha;
+    
     /**
      * @inheritdoc
      */
@@ -65,9 +68,11 @@ class Usuarios extends \yii\db\ActiveRecord
             [['num_matricula', 'nome_completo', 'senha', 'tipo_usuario', 'criado_por'], 'required'],
             [['data_nasc', 'criado_em', 'modificado_em'], 'safe'],
             [['tipo_usuario', 'ativo', 'criado_por', 'modificado_por'], 'integer'],
-            [['num_matricula', 'funcao', 'setor', 'foto'], 'string', 'max' => 45],
+            [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
             [['nome_completo'], 'string', 'max' => 100],
-            [['email', 'senha'], 'string', 'max' => 50],
+            [['email', 'senha', 'confirmSenha'], 'string', 'max' => 50],
+            ['senha', 'compare', 'compareAttribute'=>'confirmSenha', 'message'=>"Senhas não conferem"],
+            [['foto'], 'file'],
             [['num_matricula'], 'unique']
         ];
     }
@@ -87,6 +92,7 @@ class Usuarios extends \yii\db\ActiveRecord
             'foto' => 'Foto',
             'email' => 'E-mail',
             'senha' => 'Senha',
+            'confirmSenha' => 'Confirme a senha',
             'tipo_usuario' => 'Tipo de Usuário',
             'ativo' => 'Ativo',
             'criado_por' => 'Criado Por',

@@ -29,7 +29,7 @@ use app\models\TiposUsuario;
 
     <?= $form->field($model, 'senha')->passwordInput() ?>
     
-    <?= $form->field($model, 'confirmsenha')->passwordInput() ?>
+    <?= $form->field($model, 'confirmSenha')->passwordInput() ?>
 
     <?= $form->field($model, 'tipo_usuario')->dropdownList(
             TiposUsuario::find()->select(['nome', 'id'])->indexBy('nome')->column(), ['prompt'=>'Selecione o tipo de usuário']); ?>

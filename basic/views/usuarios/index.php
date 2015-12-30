@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\TiposUsuario;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuariosSearch */
@@ -35,6 +36,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             // 'senha',
             'tipo_usuario',
+            [
+                'attribute' => 'tipo_usuario',
+                'type' => 'html',
+                'value' => function($model) {
+                        $tipoUsuario = TiposUsuario::findModel($model->tipo_usuario);
+                        return $tipoUsuario->nome;
+                }
+	    ],
             // 'ativo',
             // 'criado_por',
             // 'criado_em',
