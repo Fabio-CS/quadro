@@ -61,7 +61,7 @@ class TiposUsuario extends \yii\db\ActiveRecord
     /**
      * @return array of tipos de Usuários
      */
-    public function findActives(){
+    public static function findActives(){
         $query = TiposUsuario::find();
         
         $dataProvider = new ActiveDataProvider([
