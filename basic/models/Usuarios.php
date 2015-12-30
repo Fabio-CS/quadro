@@ -71,7 +71,7 @@ class Usuarios extends \yii\db\ActiveRecord
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
             [['nome_completo'], 'string', 'max' => 100],
             [['email', 'senha', 'confirmSenha'], 'string', 'max' => 50],
-            ['senha', 'compare', 'compareAttribute'=>'confirmSenha', 'message'=>"Senhas não conferem"],
+            ['confirmSenha', 'compare', 'compareAttribute'=>'senha', 'message'=>"Senhas não conferem"],
             [['foto'], 'file'],
             [['num_matricula'], 'unique']
         ];

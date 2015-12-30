@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'tipo_usuario',
             [
                 'label' => 'Tipo de usuário',
-                'type' => 'html',
+                'format' => 'raw',
                 'value' => function($model) {
                         $tipoUsuario = $model->getTipoUsuario();
                         return $tipoUsuario->nome;
