@@ -37,10 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'senha',
             //'tipo_usuario',
             [
+                'attribute' => 'tipo_usuario',
                 'label' => 'Tipo de usuário',
                 'format' => 'raw',
                 'value' => function($model) {
-                        $tipoUsuario = $model->getTipoUsuario();
+                        $tipoUsuario = TiposUsuario::findOne($model->tipo_usuario);
                         return $tipoUsuario->nome;
                 }
 	    ],
