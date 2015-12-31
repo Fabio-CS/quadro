@@ -98,7 +98,6 @@ class TiposUsuarioController extends Controller
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
         $model = $this->findModel($id);
         $model->ativo = 0;
         if($model->save()){

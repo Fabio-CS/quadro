@@ -33,8 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'funcao',
             'setor',
             // 'foto',
-            'email:email',
-            // 'senha',
+            //'email:email',
             //'tipo_usuario',
             [
                 'attribute' => 'tipo_usuario',

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use kartik\file\FileInput;
 use app\models\TiposUsuario;
 
 /* @var $this yii\web\View */
@@ -12,7 +13,7 @@ use app\models\TiposUsuario;
 
 <div class="usuarios-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'num_matricula')->textInput(['maxlength' => true]) ?>
 
@@ -24,13 +25,16 @@ use app\models\TiposUsuario;
 
     <?= $form->field($model, 'setor')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'foto')->fileInput() ?>
+    <?= $form->field($model, 'foto')->widget(FileInput::classname(), [
+    'options' => ['accept' => 'image/*'],
+    'pluginOptions'=>['allowedFileExtensions'=>['jpg','jpeg','png','tif','tiff']]
+]);?>
 
     <?= $form->field($model, 'email')->input("email") ?>
-
-    <?= $form->field($model, 'senha')->passwordInput() ?>
     
-    <?= $form->field($model, 'confirmSenha')->passwordInput() ?>
+    <?= $form->field($model, 'senha')->passwordInput() ?>
+
+    <?= $form->field($model, 'senha_repeat')->passwordInput() ?>
 
     <?= $form->field($model, 'tipo_usuario')->dropdownList(
             ArrayHelper::map(TiposUsuario::find()->where(['ativo' => 1])->all(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>

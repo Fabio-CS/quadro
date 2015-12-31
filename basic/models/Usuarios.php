@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "usuarios".
@@ -50,8 +49,7 @@ use yii\web\UploadedFile;
  */
 class Usuarios extends \yii\db\ActiveRecord
 {
-    public $confirmSenha;
-    
+    public $senha_repeat;
     /**
      * @inheritdoc
      */
@@ -67,19 +65,19 @@ class Usuarios extends \yii\db\ActiveRecord
     {
         return [
             [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
-            [['senha', 'confirmSenha'], 'required', 'on'=>'create'],
-            [['data_nasc'], 'date'],
+            ['senha', 'required', 'on'=>'create'],
+            ['senha_repeat', 'compare', 'compareAttribute'=>'senha', 'skipOnEmpty' => false, 'message'=>"Senhas não conferem", 'on' => 'create' ],
+            [['data_nasc'], 'date', 'format' => 'yyyy-mm-dd'],
             [['tipo_usuario'], 'integer'],
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
             [['nome_completo'], 'string', 'max' => 100],
-            [['email', 'senha', 'confirmSenha'], 'string', 'max' => 50],
+            [['email'], 'string', 'max' => 50],
             [['email'], 'email'],
-            ['confirmSenha', 'compare', 'compareAttribute'=>'senha', 'message'=>"Senhas não conferem"],
-            [['foto'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff', 'allowEmpty'=>true, 'on'=>'update'],
+            [['foto'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff'],
             [['num_matricula'], 'unique']
         ];
     }
-
+    
     /**
      * @inheritdoc
      */
@@ -95,7 +93,7 @@ class Usuarios extends \yii\db\ActiveRecord
             'foto' => 'Foto',
             'email' => 'E-mail',
             'senha' => 'Senha',
-            'confirmSenha' => 'Confirme a senha',
+            'senha_repeat' => 'Confirme a senha',
             'tipo_usuario' => 'Tipo de Usuário',
             'ativo' => 'Ativo',
             'criado_por' => 'Criado Por',
@@ -103,6 +101,17 @@ class Usuarios extends \yii\db\ActiveRecord
             'modificado_por' => 'Modificado Por',
             'modificado_em' => 'Modificado Em',
         ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+            //password encryptation process
+            $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+            // validadte if (Yii::$app->getSecurity()->validatePassword($password, $hash))
+            return parent::beforeSave($insert);
     }
 
     /**

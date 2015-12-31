@@ -62,25 +62,24 @@ class UsuariosController extends Controller
     public function actionCreate()
     {
         $model = new Usuarios();
-
+        $model->scenario = 'create';
+        
         if ($model->load(Yii::$app->request->post())) {
-            var_dump($model->validate());
-            
-            if ($model->validate()) {
-                $upload_file = $model->uploadFile();
-                $path = $model->getUploadedFile();
-                $upload_file->saveAs($path);
-                $model->save();
-                return $this->redirect(['view', 'id' => $model->id_usuario]);
-            }
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-            
+                
+                //image upload process
+                $image = UploadedFile::getInstance($model, 'foto');
+                $ext = end((explode(".", $image->name)));
+                // generate a unique file name
+                $model->foto = Yii::$app->security->generateRandomString().".{$ext}";
+                $path = Yii::$app->params['uploadPath'] . $model->foto;
+                if($model->save()){
+                    $image->saveAs($path);
+                    return $this->redirect(['view', 'id' => $model->id_usuario]);
+                }
+                //return $this->render('create', ['model' => $model,]);
+                return print_r($model);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model,]);
         }
     }
 
@@ -111,9 +110,15 @@ class UsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

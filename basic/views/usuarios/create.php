@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="usuarios-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php $model->scenario = 'create' ?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

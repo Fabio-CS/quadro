@@ -36,13 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'setor',
             'foto',
             'email:email',
-            'senha',
-            'tipo_usuario',
-            'ativo',
-            'criado_por',
-            'criado_em',
-            'modificado_por',
-            'modificado_em',
+            'tipo_usuario'
         ],
     ]) ?>
 
