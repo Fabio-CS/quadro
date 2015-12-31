@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "usuarios".
@@ -65,14 +66,16 @@ class Usuarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['num_matricula', 'nome_completo', 'senha', 'tipo_usuario', 'criado_por'], 'required'],
-            [['data_nasc', 'criado_em', 'modificado_em'], 'safe'],
-            [['tipo_usuario', 'ativo', 'criado_por', 'modificado_por'], 'integer'],
+            [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
+            [['senha', 'confirmSenha'], 'required', 'on'=>'create'],
+            [['data_nasc'], 'date'],
+            [['tipo_usuario'], 'integer'],
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
             [['nome_completo'], 'string', 'max' => 100],
             [['email', 'senha', 'confirmSenha'], 'string', 'max' => 50],
+            [['email'], 'email'],
             ['confirmSenha', 'compare', 'compareAttribute'=>'senha', 'message'=>"Senhas não conferem"],
-            [['foto'], 'file'],
+            [['foto'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff', 'allowEmpty'=>true, 'on'=>'update'],
             [['num_matricula'], 'unique']
         ];
     }
