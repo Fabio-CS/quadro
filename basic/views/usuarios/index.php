@@ -24,17 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id_usuario',
+            [
+               'attribute' => 'id_usuario',
+               'contentOptions' => ['style' => 'width: 50px;', 'class' => 'text-center'], 
+            ],
             'num_matricula',
             'nome_completo',
-            //'data_nasc',
             'funcao',
             'setor',
-            // 'foto',
-            //'email:email',
-            //'tipo_usuario',
             [
                 'attribute' => 'tipo_usuario',
                 'label' => 'Tipo de usuário',
@@ -42,15 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model) {
                         $tipoUsuario = TiposUsuario::findOne($model->tipo_usuario);
                         return $tipoUsuario->nome;
-                }
+                },
+                'filter' => false
 	    ],
-            // 'ativo',
-            // 'criado_por',
-            // 'criado_em',
-            // 'modificado_por',
-            // 'modificado_em',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['style' => 'width: 80px; text-align: center']
+            ],
         ],
     ]); ?>
 

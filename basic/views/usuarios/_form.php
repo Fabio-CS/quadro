@@ -27,8 +27,7 @@ use app\models\TiposUsuario;
 
     <?= $form->field($model, 'foto')->widget(FileInput::classname(), [
     'options' => ['accept' => 'image/*'],
-    'pluginOptions'=>['allowedFileExtensions'=>['jpg','jpeg','png','tif','tiff']]
-]);?>
+    'pluginOptions'=>['allowedFileExtensions'=>['jpg','jpeg','png','tif','tiff'], 'showUpload' => false]]);?>
 
     <?= $form->field($model, 'email')->input("email") ?>
     

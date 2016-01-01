@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\TiposUsuario;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -31,12 +32,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_usuario',
             'num_matricula',
             'nome_completo',
-            'data_nasc',
+            'email:email',
             'funcao',
             'setor',
-            'foto',
-            'email:email',
-            'tipo_usuario'
+            [
+                'attribute' => 'data_nasc',
+                'format' => ['date', 'dd/MM/Y'],
+            ],
+            [
+                'attribute' => 'tipo_usuario',
+                'label' => 'Tipo de usuário',
+                'value' => TiposUsuario::findOne($model->tipo_usuario)->nome,
+	    ],
+            [
+                'attribute' =>'photo',
+                'value' => Yii::$app->params['uploadPath'].$model->foto,
+                'format' => ['image',['width'=>'200','height'=>'300']],
+            ],
         ],
     ]) ?>
 
