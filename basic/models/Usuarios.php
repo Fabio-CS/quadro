@@ -28,8 +28,8 @@ use Yii;
  */
 class Usuarios extends \yii\db\ActiveRecord
 {
-    public $senha_repeat;
-    public $oldPassword;
+    public $password_repeat;
+    public $password;
     /**
      * @inheritdoc
      */
@@ -45,8 +45,8 @@ class Usuarios extends \yii\db\ActiveRecord
     {
         return [
             [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
-            [['senha', 'senha_repeat'], 'required', 'on'=>'create'],
-            ['senha_repeat', 'compare', 'compareAttribute'=>'senha', 'message'=>"Senhas não conferem", 'on' => 'create' ],
+            [['password', 'password_repeat'], 'required', 'on'=>'create'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Senhas não conferem", 'on' => 'create' ],
             [['data_nasc'], 'date', 'format' => 'yyyy-mm-dd'],
             [['tipo_usuario'], 'integer'],
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
@@ -55,7 +55,8 @@ class Usuarios extends \yii\db\ActiveRecord
             [['email'], 'email'],
             [['foto'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff'],
             [['num_matricula'], 'unique'],
-            ['senha_repeat', SenhaValidator::className(), 'on' => 'update']
+            ['password', SenhaValidator::className(), 'skipOnEmpty' => 'true', 'on' => 'update'],
+            ['password_repeat', SenhaValidator::className(), 'skipOnEmpty' => 'true', 'on' => 'update']
         ];
     }
     
@@ -73,8 +74,8 @@ class Usuarios extends \yii\db\ActiveRecord
             'setor' => 'Setor',
             'foto' => 'Foto',
             'email' => 'E-mail',
-            'senha' => 'Senha',
-            'senha_repeat' => 'Confirme a senha',
+            'password' => 'Senha',
+            'password_repeat' => 'Confirme a senha',
             'tipo_usuario' => 'Tipo de Usuário',
             'ativo' => 'Ativo',
             'criado_por' => 'Criado Por',
@@ -89,9 +90,13 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-            if(!empty($this->senha_repeat)){
+            if ($this->getIsNewRecord()){
+                $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+            }else if(isset($this->password) && !empty($this->password)){
                 //password encryptation process
-                $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+                $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+            }else{
+                unset($this->senha);
             }
             // validadte if (Yii::$app->getSecurity()->validatePassword($password, $hash))
             return parent::beforeSave($insert);
