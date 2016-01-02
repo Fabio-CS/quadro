@@ -33,14 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'funcao',
             'setor',
             [
-                'attribute' => 'tipo_usuario',
-                'label' => 'Tipo de usuário',
-                'format' => 'raw',
-                'value' => function($model) {
-                        $tipoUsuario = TiposUsuario::findOne($model->tipo_usuario);
-                        return $tipoUsuario->nome;
-                },
-                'filter' => false
+                'attribute' => 'tipoUsuario.nome',
+                'label' => 'Tipo de usuário'
 	    ],
             [
                 'class' => 'yii\grid\ActionColumn',

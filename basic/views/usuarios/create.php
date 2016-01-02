@@ -9,11 +9,11 @@ use yii\helpers\Html;
 $this->title = 'Criar Usuários';
 $this->params['breadcrumbs'][] = ['label' => 'Usuários', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$model->scenario = 'create'
 ?>
 <div class="usuarios-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php $model->scenario = 'create' ?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

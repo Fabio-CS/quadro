@@ -8,7 +8,7 @@ use app\models\TiposUsuario;
 /* @var $model app\models\Usuarios */
 
 $this->title = $model->nome_completo;
-$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Usuários', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuarios-view">
@@ -40,9 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['date', 'dd/MM/Y'],
             ],
             [
-                'attribute' => 'tipo_usuario',
+                'attribute' => 'tipoUsuario.nome',
                 'label' => 'Tipo de usuário',
-                'value' => TiposUsuario::findOne($model->tipo_usuario)->nome,
 	    ],
             [
                 'attribute' =>'photo',

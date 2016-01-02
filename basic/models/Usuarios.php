@@ -1,7 +1,8 @@
 <?php
 
 namespace app\models;
-
+use yii\web\UploadedFile;
+use app\components\validators\SenhaValidator;
 use Yii;
 
 /**
@@ -24,32 +25,11 @@ use Yii;
  * @property integer $modificado_por
  * @property string $modificado_em
  *
- * @property Avisos[] $avisos
- * @property Avisos[] $avisos0
- * @property Curtidas[] $curtidas
- * @property Curtidas[] $curtidas0
- * @property Curtidas[] $curtidas1
- * @property EstadosEmocionais[] $estadosEmocionais
- * @property EstadosEmocionais[] $estadosEmocionais0
- * @property EstadosEmocionais[] $estadosEmocionais1
- * @property GrupoUsuarios[] $grupoUsuarios
- * @property GrupoUsuarios[] $grupoUsuarios0
- * @property GrupoUsuariosHasUsuarios[] $grupoUsuariosHasUsuarios
- * @property GrupoUsuarios[] $idGrupoUsuarios
- * @property Mensagens[] $mensagens
- * @property Mensagens[] $mensagens0
- * @property PeriodosAfastamento[] $periodosAfastamentos
- * @property PeriodosAfastamento[] $periodosAfastamentos0
- * @property PeriodosAfastamento[] $periodosAfastamentos1
- * @property TiposUsuario $tipoUsuario
- * @property Usuarios $criadoPor
- * @property Usuarios[] $usuarios
- * @property Usuarios $modificadoPor
- * @property Usuarios[] $usuarios0
  */
 class Usuarios extends \yii\db\ActiveRecord
 {
     public $senha_repeat;
+    public $oldPassword;
     /**
      * @inheritdoc
      */
@@ -65,8 +45,8 @@ class Usuarios extends \yii\db\ActiveRecord
     {
         return [
             [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
-            ['senha', 'required', 'on'=>'create'],
-            ['senha_repeat', 'compare', 'compareAttribute'=>'senha', 'skipOnEmpty' => false, 'message'=>"Senhas não conferem", 'on' => 'create' ],
+            [['senha', 'senha_repeat'], 'required', 'on'=>'create'],
+            ['senha_repeat', 'compare', 'compareAttribute'=>'senha', 'message'=>"Senhas não conferem", 'on' => 'create' ],
             [['data_nasc'], 'date', 'format' => 'yyyy-mm-dd'],
             [['tipo_usuario'], 'integer'],
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
@@ -74,7 +54,8 @@ class Usuarios extends \yii\db\ActiveRecord
             [['email'], 'string', 'max' => 50],
             [['email'], 'email'],
             [['foto'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff'],
-            [['num_matricula'], 'unique']
+            [['num_matricula'], 'unique'],
+            ['senha_repeat', SenhaValidator::className(), 'on' => 'update']
         ];
     }
     
@@ -108,66 +89,89 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function beforeSave($insert)
     {
-            //password encryptation process
-            $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+            if(!empty($this->senha_repeat)){
+                //password encryptation process
+                $this->senha = Yii::$app->getSecurity()->generatePasswordHash($this->senha);
+            }
             // validadte if (Yii::$app->getSecurity()->validatePassword($password, $hash))
             return parent::beforeSave($insert);
     }
-
+    
     /**
-     * @return \yii\db\ActiveQuery
+     * fetch stored image file name with complete path 
+     * @return string
      */
-    public function getAvisos()
+    public function getImageFile() 
     {
-        return $this->hasMany(Avisos::className(), ['criado_por' => 'id_usuario']);
+        return isset($this->foto) ? Yii::$app->params['uploadPath'] . $this->foto : null;
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * fetch stored image url
+     * @return string
      */
-    public function getAvisos0()
+    public function getImageUrl() 
     {
-        return $this->hasMany(Avisos::className(), ['modificado_por' => 'id_usuario']);
+        // return a default image placeholder if your source avatar is not found
+        $image = isset($this->foto) ? $this->foto : 'default_user.jpg';
+        return Yii::$app->params['uploadUrl'] . $image;
     }
+
+    /**
+    * Process upload of image
+    *
+    * @return mixed the uploaded image instance
+    */
+    public function uploadImage() {
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'foto');
+
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+        $ext = end((explode(".", $image->name)));
+
+        // generate a unique file name
+        $this->foto = Yii::$app->security->generateRandomString().".{$ext}";
+
+        // the uploaded image instance
+        return $image;
+    }
+
+    /**
+    * Process deletion of image
+    *
+    * @return boolean the status of deletion
+    */
+    public function deleteImage() {
+        $file = $this->getImageFile();
+
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
+
+        // if deletion successful, reset your file attributes
+        $this->foto = null;
+
+        return true;
+    }
+    
 
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getCurtidas()
     {
-        return $this->hasMany(Curtidas::className(), ['criado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCurtidas0()
-    {
-        return $this->hasMany(Curtidas::className(), ['modificado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCurtidas1()
-    {
         return $this->hasMany(Curtidas::className(), ['usuario' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEstadosEmocionais()
-    {
-        return $this->hasMany(EstadosEmocionais::className(), ['criado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEstadosEmocionais0()
-    {
-        return $this->hasMany(EstadosEmocionais::className(), ['modificado_por' => 'id_usuario']);
     }
 
     /**
@@ -176,22 +180,6 @@ class Usuarios extends \yii\db\ActiveRecord
     public function getEstadosEmocionais1()
     {
         return $this->hasMany(EstadosEmocionais::className(), ['usuario' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGrupoUsuarios()
-    {
-        return $this->hasMany(GrupoUsuarios::className(), ['criado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getGrupoUsuarios0()
-    {
-        return $this->hasMany(GrupoUsuarios::className(), ['modificado_por' => 'id_usuario']);
     }
 
     /**
@@ -213,7 +201,7 @@ class Usuarios extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMensagens()
+    public function getMensagensEnviadas()
     {
         return $this->hasMany(Mensagens::className(), ['criado_por' => 'id_usuario']);
     }
@@ -221,7 +209,7 @@ class Usuarios extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMensagens0()
+    public function getMensagensRecebidas()
     {
         return $this->hasMany(Mensagens::className(), ['destinatario' => 'id_usuario']);
     }
@@ -230,22 +218,6 @@ class Usuarios extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getPeriodosAfastamentos()
-    {
-        return $this->hasMany(PeriodosAfastamento::className(), ['criado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPeriodosAfastamentos0()
-    {
-        return $this->hasMany(PeriodosAfastamento::className(), ['modificado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPeriodosAfastamentos1()
     {
         return $this->hasMany(PeriodosAfastamento::className(), ['usuario' => 'id_usuario']);
     }
@@ -256,37 +228,5 @@ class Usuarios extends \yii\db\ActiveRecord
     public function getTipoUsuario()
     {
         return $this->hasOne(TiposUsuario::className(), ['id_tipo_usuario' => 'tipo_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCriadoPor()
-    {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'criado_por']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuarios()
-    {
-        return $this->hasMany(Usuarios::className(), ['criado_por' => 'id_usuario']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getModificadoPor()
-    {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'modificado_por']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuarios0()
-    {
-        return $this->hasMany(Usuarios::className(), ['modificado_por' => 'id_usuario']);
     }
 }

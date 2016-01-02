@@ -65,19 +65,16 @@ class UsuariosController extends Controller
         $model->scenario = 'create';
         
         if ($model->load(Yii::$app->request->post())) {
-                
-                //image upload process
-                $image = UploadedFile::getInstance($model, 'foto');
-                $ext = end((explode(".", $image->name)));
-                // generate a unique file name
-                $model->foto = Yii::$app->security->generateRandomString().".{$ext}";
-                $path = Yii::$app->params['uploadPath'] . $model->foto;
-                if($model->save()){
+                // process uploaded image file instance
+                $image = $model->uploadImage();
+                if($model->save() && $image !== false){
+                    // upload only if valid uploaded file instance found
+                    $path = $model->getImageFile();
                     $image->saveAs($path);
                     return $this->redirect(['view', 'id' => $model->id_usuario]);
                 }
-                //return $this->render('create', ['model' => $model,]);
-                return print_r($model);
+                //error saving model
+                return $this->render('create', ['model' => $model,]);
         } else {
             return $this->render('create', ['model' => $model,]);
         }
@@ -92,14 +89,35 @@ class UsuariosController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model->scenario = 'update';
+        $oldFile = $model->getImageFile();
+        $oldFoto = $model->foto;
+        
+        if ($model->load(Yii::$app->request->post())) {
+            // process uploaded image file instance
+            $image = $model->uploadImage();
+            // revert back if no valid file instance uploaded
+            if ($image === false) {
+                $model->foto = $oldFoto;
+            }
+            if ($model->save()) {
+                if ($image !== false && unlink($oldFile)) {
+                    // upload only if valid uploaded file instance found
+                    // delete old and overwrite
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+                return $this->redirect(['view', 'id'=>$model->id_usuario]);
+            } else {
+                // error in saving model
+               return $this->render('update', [
+                'model'=>$model,
+               ]); 
+            }
         }
+        return $this->render('update', [
+            'model'=>$model,
+        ]);
     }
 
     /**
@@ -113,6 +131,9 @@ class UsuariosController extends Controller
         $model = $this->findModel($id);
         $model->ativo = 0;
         if($model->save()){
+            /*if (!$model->deleteImage()) {
+                Yii::$app->session->setFlash('error', 'Error deleting image');
+            }*/
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
