@@ -102,7 +102,22 @@ class EstadosEmocionaisController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    /**
+     * Lists all EstadosEmocionais models.
+     * @return mixed
+     */
+    public function actionCheckin()
+    {
+        $searchModel = new EstadosEmocionaisSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
     /**
      * Finds the EstadosEmocionais model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

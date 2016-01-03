@@ -79,10 +79,12 @@ class UsuariosController extends Controller
                 // process uploaded image file instance
                 $image = $model->uploadImage();
                 $model->criado_por = Yii::$app->user->getId();
-                if($model->save() && $image !== false){
+                if($model->save()){
                     // upload only if valid uploaded file instance found
-                    $path = $model->getImageFile();
-                    $image->saveAs($path);
+                    if($image !== false){
+                        $path = $model->getImageFile();
+                        $image->saveAs($path);
+                    }
                     return $this->redirect(['view', 'id' => $model->id_usuario]);
                 }
                 //error saving model
@@ -177,8 +179,25 @@ class UsuariosController extends Controller
     {
 
         $model = new LoginForm();
+        $model->scenario = "web";
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->redirect(Yii::$app->user->identity->getMenu());
+        }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+    
+    /**
+     * Processo de Login
+     */
+    public function actionLocal()
+    {
+
+        $model = new LoginForm();
+        $model->scenario = "local";
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->redirect(["estados-emocionais/checkin", 'id'=>Yii::$app->user->getId()]);
         }
         return $this->render('login', [
             'model' => $model,

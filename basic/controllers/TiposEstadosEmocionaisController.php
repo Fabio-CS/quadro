@@ -61,13 +61,21 @@ class TiposEstadosEmocionaisController extends Controller
     public function actionCreate()
     {
         $model = new TiposEstadosEmocionais();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_tipo_estado_emocional]);
+        $model->scenario = "create";
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $image = $model->uploadImage();
+            
+            if($model->save() && $image !== false){
+                    // upload only if valid uploaded file instance found
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                    return $this->redirect(['view', 'id' => $model->id_tipo_estado_emocional]);
+                }
+                //error saving model
+                return $this->render('create', ['model' => $model,]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model,]);
         }
     }
 
@@ -80,14 +88,35 @@ class TiposEstadosEmocionaisController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_tipo_estado_emocional]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        $model->scenario = "update";
+        $oldFile = $model->getImageFile();
+        $oldFoto = $model->icone;
+        
+        if ($model->load(Yii::$app->request->post())) {
+            // process uploaded image file instance
+            $image = $model->uploadImage();
+            // revert back if no valid file instance uploaded
+            if ($image === false) {
+                $model->icone = $oldFoto;
+            }
+            if ($model->save()) {
+                if ($image !== false && unlink($oldFile)) {
+                    // upload only if valid uploaded file instance found
+                    // delete old and overwrite
+                    $path = $model->getImageFile();
+                    $image->saveAs($path);
+                }
+                return $this->redirect(['view', 'id'=>$model->id_tipo_estado_emocional]);
+            } else {
+                // error in saving model
+               return $this->render('update', [
+                'model'=>$model,
+               ]); 
+            }
         }
+        return $this->render('update', [
+            'model'=>$model,
+        ]);
     }
 
     /**
@@ -98,8 +127,9 @@ class TiposEstadosEmocionaisController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        unlink($model->getImageFile());
+        $model->delete();
         return $this->redirect(['index']);
     }
 

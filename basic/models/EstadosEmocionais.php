@@ -38,9 +38,9 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_estado_emocional', 'usuario', 'criado_por'], 'required'],
-            [['tipo_estado_emocional', 'usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
-            [['data', 'criado_em', 'modificado_em'], 'safe']
+            [['tipo_estado_emocional', 'usuario'], 'required'],
+            [['tipo_estado_emocional', 'usuario'], 'integer'],
+            [['data'], 'date', 'format' => 'yyyy-mm-dd']
         ];
     }
 
@@ -50,7 +50,7 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_estado_emocional' => 'Id Estado Emocional',
+            'id_estado_emocional' => 'ID',
             'tipo_estado_emocional' => 'Tipo Estado Emocional',
             'usuario' => 'Usuario',
             'data' => 'Data',
@@ -89,7 +89,7 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuario0()
+    public function getUsuarioO()
     {
         return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
     }

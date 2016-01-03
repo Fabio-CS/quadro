@@ -48,6 +48,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
         return [
             [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
             [['password', 'password_repeat'], 'required', 'on'=>'create'],
+            ['password', 'string', 'min' => 5],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Senhas não conferem", 'on' => 'create' ],
             [['data_nasc'], 'date', 'format' => 'yyyy-mm-dd'],
             [['tipo_usuario'], 'integer'],
@@ -121,7 +122,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     {
         // return a default image placeholder if your source avatar is not found
         $image = isset($this->foto) ? $this->foto : 'default_user.jpg';
-        return Yii::$app->params['uploadUrl'] . $image;
+        return Yii::$app->params['uploadPath'] . $image;
     }
 
     /**

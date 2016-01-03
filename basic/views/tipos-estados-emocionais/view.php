@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\TiposEstadosEmocionais */
 
-$this->title = $model->id_tipo_estado_emocional;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Tipos Estados Emocionais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_tipo_estado_emocional], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_tipo_estado_emocional], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->id_tipo_estado_emocional], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Excluir', ['delete', 'id' => $model->id_tipo_estado_emocional], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Você tem certeza que quer deletar esse item?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,9 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_tipo_estado_emocional',
             'nome',
-            'icone',
-            'ativo',
+            [
+                'attribute' =>'icone',
+                'value' => Yii::$app->params['uploadPath'].$model->icone,
+                'format' => ['image',['width'=>'200','height'=>'200']],
+            ]
         ],
     ]) ?>
-
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 </div>

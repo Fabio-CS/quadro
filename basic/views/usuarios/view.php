@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\TiposUsuario;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
@@ -45,10 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	    ],
             [
                 'attribute' =>'photo',
-                'value' => Yii::$app->params['uploadPath'].$model->foto,
+                'value' => $model->getImageUrl(),
                 'format' => ['image',['width'=>'200','height'=>'300']],
             ],
         ],
     ]) ?>
-
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 </div>

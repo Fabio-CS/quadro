@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\LoginForm */
 
 ?>
-
 <p>Por favor, preencha as informações abaixo para realizar o login: </p>
 
     <?php $form = ActiveForm::begin([
@@ -19,9 +18,11 @@ use yii\helpers\Html;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'matricula') ?>
+        <?= $form->field($model, 'matricula', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'tabindex' => '1']]) ?>
 
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?php  if($model->scenario == 'web') {
+            echo $form->field($model, 'password')->passwordInput();
+        } ?>
 
 
         <div class="form-group">

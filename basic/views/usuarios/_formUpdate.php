@@ -32,7 +32,7 @@ use app\models\TiposUsuario;
                         'showUpload' => false,
                         'showRemove' => false,
                         'initialPreview' => [
-                                              Html::img(Yii::$app->params['uploadPath'].$model->foto, ['class'=>'file-preview-image', 'alt'=>'Imagem atual', 'title'=>'Imagem Atual']),
+                                              Html::img($model->getImageUrl(), ['class'=>'file-preview-image', 'alt'=>'Imagem atual', 'title'=>'Imagem Atual']),
                         ]
                     ]
     ]);?>

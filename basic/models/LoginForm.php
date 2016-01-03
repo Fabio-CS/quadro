@@ -23,9 +23,10 @@ class LoginForm extends Model
     {
         return [
             // matricula e senha são obrigatórios
-            [['matricula', 'password'], 'required'],
+            [['matricula', 'password'], 'required', 'on' => 'web'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword', 'on' => 'web'],
+            ['matricula', 'required', 'on' => 'local']
         ];
     }
     /**
