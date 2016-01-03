@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Curtidas */
 
-$this->title = $model->id_curtida;
+$this->title = "Detalhes da Curtida";
 $this->params['breadcrumbs'][] = ['label' => 'Curtidas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,19 +24,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id_curtida',
-            'usuario',
+            [
+                'attribute' => 'usuarioO.nome_completo',
+                'label' => 'Usuário'
+	    ],
             'motivo',
-            'criado_por',
-            'criado_em',
-            'modificado_por',
-            'modificado_em',
-            'ativo',
+            [
+                'attribute' => 'criado_em',
+                'format' => ['date', 'dd/MM/Y'],
+            ],
         ],
     ]) ?>
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 
 </div>

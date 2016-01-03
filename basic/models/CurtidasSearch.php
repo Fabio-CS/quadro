@@ -62,7 +62,7 @@ class CurtidasSearch extends Curtidas
             'criado_em' => $this->criado_em,
             'modificado_por' => $this->modificado_por,
             'modificado_em' => $this->modificado_em,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'motivo', $this->motivo]);

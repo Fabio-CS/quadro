@@ -10,15 +10,9 @@ use Yii;
  * @property integer $id_curtida
  * @property integer $usuario
  * @property string $motivo
- * @property integer $criado_por
- * @property string $criado_em
- * @property integer $modificado_por
- * @property string $modificado_em
  * @property integer $ativo
  *
- * @property Usuarios $criadoPor
- * @property Usuarios $modificadoPor
- * @property Usuarios $usuario0
+ * @property Usuarios $usuario
  */
 class Curtidas extends \yii\db\ActiveRecord
 {
@@ -36,9 +30,8 @@ class Curtidas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario', 'motivo', 'criado_por'], 'required'],
-            [['usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
-            [['criado_em', 'modificado_em'], 'safe'],
+            [['usuario', 'motivo'], 'required'],
+            [['usuario'], 'integer'],
             [['motivo'], 'string', 'max' => 500]
         ];
     }
@@ -52,34 +45,14 @@ class Curtidas extends \yii\db\ActiveRecord
             'id_curtida' => 'ID',
             'usuario' => 'Usuário',
             'motivo' => 'Motivo',
-            'criado_por' => 'Criado por',
-            'criado_em' => 'Criado em',
-            'modificado_por' => 'Modificado por',
-            'modificado_em' => 'Modificado em',
-            'ativo' => 'Ativo',
+            'criado_em' => 'Enviada em'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCriadoPor()
-    {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'criado_por']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getModificadoPor()
-    {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'modificado_por']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsuario0()
+    public function getUsuarioO()
     {
         return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
     }

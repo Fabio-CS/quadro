@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Usuarios;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Curtidas */
@@ -12,9 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'usuario')->textInput() // lista de usuarios - droplist ?> 
+    <?= $form->field($model, 'usuario')->dropdownList(
+            ArrayHelper::map(Usuarios::find()->where(['ativo' => 1])->orderBy('nome_completo')->all(), 'id_usuario', 'nome_completo'), ['prompt'=>'Selecione o usuário']); ?>
 
-    <?= $form->field($model, 'motivo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'motivo')->textarea(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Enviar' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

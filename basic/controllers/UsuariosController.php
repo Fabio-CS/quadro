@@ -143,16 +143,14 @@ class UsuariosController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $model->modificado_por = Yii::$app->user->getId();
+        $model->modificado_em = date('Y-m-d G:i:s');
         $model->ativo = 0;
         if($model->save()){
-            /*if (!$model->deleteImage()) {
-                Yii::$app->session->setFlash('error', 'Error deleting image');
-            }*/
             return $this->redirect(['index']);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            Yii::$app->session->setFlash('error', 'Erro ao deletar usuário');
+            return $this->render(['index']);
         }
     }
 

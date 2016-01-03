@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Curtidas */
 
-$this->title = 'Atualizar Curtidas: ' . ' ' . $model->id_curtida;
+$this->title = 'Atualizar Curtida: ' . ' ' . $model->id_curtida;
 $this->params['breadcrumbs'][] = ['label' => 'Curtidas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_curtida, 'url' => ['view', 'id' => $model->id_curtida]];
 $this->params['breadcrumbs'][] = 'Atualizar';

@@ -8,6 +8,7 @@ use app\models\CurtidasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CurtidasController implements the CRUD actions for Curtidas model.
@@ -17,6 +18,16 @@ class CurtidasController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['view', 'index', 'create', 'delete', 'update'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -62,8 +73,14 @@ class CurtidasController extends Controller
     {
         $model = new Curtidas();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_curtida]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->criado_por = Yii::$app->user->getId();
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_curtida]);
+            }
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +98,15 @@ class CurtidasController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_curtida]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->modificado_por = Yii::$app->user->getId();
+            $model->modificado_em = date('Y-m-d G:i:s');
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_curtida]);
+            }
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -98,8 +122,14 @@ class CurtidasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->modificado_por = Yii::$app->user->getId();
+        $model->modificado_em = date('Y-m-d G:i:s');
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        }
+        Yii::$app->session->setFlash('error', 'Erro ao deletar curtida');
         return $this->redirect(['index']);
     }
 
