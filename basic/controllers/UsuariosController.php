@@ -5,10 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Usuarios;
 use app\models\UsuariosSearch;
+use app\models\LoginForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
+use yii\filters\AccessControl;
 
 /**
  * UsuariosController implements the CRUD actions for Usuarios model.
@@ -18,6 +19,16 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['view', 'index', 'create', 'delete', 'update', 'logout'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -67,6 +78,7 @@ class UsuariosController extends Controller
         if ($model->load(Yii::$app->request->post())) {
                 // process uploaded image file instance
                 $image = $model->uploadImage();
+                $model->criado_por = Yii::$app->user->getId();
                 if($model->save() && $image !== false){
                     // upload only if valid uploaded file instance found
                     $path = $model->getImageFile();
@@ -100,6 +112,8 @@ class UsuariosController extends Controller
             if ($image === false) {
                 $model->foto = $oldFoto;
             }
+            $model->modificado_por = Yii::$app->user->getId();
+            $model->modificado_em = date('Y-m-d G:i:s');
             if ($model->save()) {
                 if ($image !== false && unlink($oldFile)) {
                     // upload only if valid uploaded file instance found
@@ -156,5 +170,30 @@ class UsuariosController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    /**
+     * Processo de Login
+     */
+    public function actionLogin()
+    {
+
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->redirect(Yii::$app->user->identity->getMenu());
+        }
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     *  Processo de Logout
+     * @return Index page
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 }

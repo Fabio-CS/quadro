@@ -3,6 +3,8 @@
 namespace app\models;
 use yii\web\UploadedFile;
 use app\components\validators\SenhaValidator;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 use Yii;
 
 /**
@@ -26,7 +28,7 @@ use Yii;
  * @property string $modificado_em
  *
  */
-class Usuarios extends \yii\db\ActiveRecord
+class Usuarios extends ActiveRecord implements IdentityInterface
 {
     public $password_repeat;
     public $password;
@@ -234,4 +236,89 @@ class Usuarios extends \yii\db\ActiveRecord
     {
         return $this->hasOne(TiposUsuario::className(), ['id_tipo_usuario' => 'tipo_usuario']);
     }
+    
+    /**
+     * Encontrar o usuário pelo número de matrícula
+     * @return Usuario Informações do usuário do banco de dados.
+     */
+     public static function findByMatricula($matricula){
+         return Usuarios::find()->where(['num_matricula' => $matricula, 'ativo' => 1])->one();
+     }
+     
+     /**
+      * Validar senha de acordo com o usuário informado.
+      * @return boolean True se a senha está correta.
+      */
+     public function validatePassword($password){
+         if (Yii::$app->getSecurity()->validatePassword($password, $this->senha)){
+             return true;
+         }else{
+             return false;
+         }
+     }
+
+     public function isAdmin(){
+         if($this->tipoUsuario->nome === Yii::$app->params['Admin']){
+             return true;
+         }
+         return false;
+     }
+     
+     public function isDev(){
+         if($this->tipoUsuario->nome === Yii::$app->params['Dev']){
+             return true;
+         }
+         return false;
+     }
+     
+     public function isColab(){
+         if($this->tipoUsuario->nome === Yii::$app->params['Colab']){
+             return true;
+         }
+         return false;
+     }
+     
+     public function getMenu(){
+         if($this->isAdmin()){
+             return ['site/menu-admin'];
+         }else if($this->isColab()){
+             return ['site/menu-colaborador'];
+         }else if($this->isDev()){
+             return ['site/menu-developer'];
+         }
+         return ['site/index'];
+     }
+     /**
+     * Identity Interface Implementation
+     */
+    
+    public function getAuthKey() {
+        
+    }
+    
+    /**
+     * @return int|string current user ID
+     */
+    public function getId() {
+        return $this->id_usuario;
+    }
+
+    public function validateAuthKey($authKey) {
+        
+    }
+    
+    /**
+     * Finds an identity by the given ID.
+     *
+     * @param string|integer $id the ID to be looked for
+     * @return IdentityInterface|null the identity object that matches the given ID.
+     */
+    public static function findIdentity($id) {
+        return static::findOne($id);
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null) {
+        
+    }
+
 }

@@ -4,17 +4,16 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use app\models\Usuarios;
 /**
  * LoginForm is the model behind the login form.
  */
 class LoginForm extends Model
 {
-    public $username;
+    public $matricula;
     public $password;
-    public $rememberMe = true;
 
-    private $_user = false;
+    private $usuario = false;
 
 
     /**
@@ -23,15 +22,21 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
+            // matricula e senha são obrigatórios
+            [['matricula', 'password'], 'required'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
-
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => 'Senha',
+            'num_matricula' => 'Matrícula',];    
+    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -42,10 +47,10 @@ class LoginForm extends Model
     public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
-            $user = $this->getUser();
+            $user = $this->getUsuario();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Matrícula ou senha incorretas.');
             }
         }
     }
@@ -57,7 +62,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            return Yii::$app->user->login($this->getUsuario());
         }
         return false;
     }
@@ -67,12 +72,12 @@ class LoginForm extends Model
      *
      * @return User|null
      */
-    public function getUser()
+    public function getUsuario()
     {
-        if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+        if ($this->usuario === false) {
+            $this->usuario = Usuarios::findByMatricula($this->matricula);
         }
 
-        return $this->_user;
+        return $this->usuario;
     }
 }

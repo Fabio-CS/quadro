@@ -17,10 +17,9 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'only' => ['menu-admin', 'menu-colaborador', 'menu-developer'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -112,6 +111,21 @@ class SiteController extends Controller
             // either the page is initially displayed or there is some validation error
             return $this->render('entry', ['model' => $model]);
         }
+    }
+    
+    public function actionMenuAdmin()
+    {
+        return $this->render('menu-admin');
+    }
+    
+    public function actionMenuColaborador()
+    {
+        return $this->render('menu-colaborador');
+    }
+    
+    public function actionMenuDeveloper()
+    {
+        return $this->render('menu-developer');
     }
     
 }
