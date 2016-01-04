@@ -26,7 +26,8 @@ class LoginForm extends Model
             [['matricula', 'password'], 'required', 'on' => 'web'],
             // password is validated by validatePassword()
             ['password', 'validatePassword', 'on' => 'web'],
-            ['matricula', 'required', 'on' => 'local']
+            ['matricula', 'required', 'on' => 'local'],
+            ['matricula', 'validateMatricula', 'on' => 'local']
         ];
     }
     /**
@@ -55,7 +56,11 @@ class LoginForm extends Model
             }
         }
     }
-
+    public function validateMatricula($attribute, $params){ 
+        if (empty(Usuarios::findByMatricula($this->matricula))) {
+            $this->addError($attribute, 'Matrícula não encontrada, tente novamente, se persistir procure o RH');
+        }
+     }
     /**
      * Logs in a user using the provided username and password.
      * @return boolean whether the user is logged in successfully

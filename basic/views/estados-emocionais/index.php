@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Estados Emocionais', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Estado Emocional', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,17 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id_estado_emocional',
-            'tipo_estado_emocional',
-            'usuario',
-            'data',
-            'criado_por',
-            // 'criado_em',
-            // 'modificado_por',
-            // 'modificado_em',
-            // 'ativo',
-
+            [
+               'attribute' => 'tipoEstadoEmocional.nome',
+                'label' => 'Estado Emocional'
+            ],
+            [
+                'attribute' => 'usuarioO.nome_completo',
+                'label' => 'Colaborador'
+            ],
+            [
+                'attribute' => 'data',
+                'format' => ['date', 'dd/MM/Y'],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -196,8 +196,9 @@ class UsuariosController extends Controller
 
         $model = new LoginForm();
         $model->scenario = "local";
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect(["estados-emocionais/checkin", 'id'=>Yii::$app->user->getId()]);
+        if ($model->load(Yii::$app->request->post()) && ($model->validate())) {
+            $model->login();
+            return $this->redirect(["estados-emocionais/checkin"]);
         }
         return $this->render('login', [
             'model' => $model,

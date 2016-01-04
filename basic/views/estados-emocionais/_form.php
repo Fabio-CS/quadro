@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\Usuarios;
+use app\models\TiposEstadosEmocionais;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
@@ -13,11 +15,12 @@ use app\models\Usuarios;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'tipo_estado_emocional')->textInput() ?>
+    <?= $form->field($model, 'tipo_estado_emocional')->dropdownList(
+            ArrayHelper::map(TiposEstadosEmocionais::find()->where("nome != 'Férias'")->andWhere("nome != 'Doente'")->orderBy('nome')->all(), 'id_tipo_estado_emocional', 'nome'), ['prompt'=>'Selecione o tipo de estado emocional']); ?>
 
     <?= $form->field($model, 'usuario')->dropdownList(
-            Usuarios::find()->select(['nome_completo', 'id'])->indexBy('nome_completo')->column(), ['prompt'=>'Selecione o Usuário']); ?>
-
+            ArrayHelper::map(Usuarios::find()->where(['ativo' => 1])->orderBy('nome_completo')->all(), 'id_usuario', 'nome_completo'), ['prompt'=>'Selecione o usuário']); ?>
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Inserir' : 'Atualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

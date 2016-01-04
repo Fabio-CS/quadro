@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use yii\web\View;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,3 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     ]) ?>
 </div>
+<?php
+    $this->registerJs(
+       '$(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+       View::POS_READY, "myHideScript"
+    );
+    ?>

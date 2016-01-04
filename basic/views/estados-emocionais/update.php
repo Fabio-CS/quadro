@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
-$this->title = 'Update Estados Emocionais: ' . ' ' . $model->id_estado_emocional;
+$this->title = 'Modificar Estado Emocional: ' . ' ' . $model->id_estado_emocional;
 $this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_estado_emocional, 'url' => ['view', 'id' => $model->id_estado_emocional]];
 $this->params['breadcrumbs'][] = 'Update';

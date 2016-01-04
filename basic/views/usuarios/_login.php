@@ -18,7 +18,7 @@ use yii\helpers\Html;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'matricula', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'tabindex' => '1']]) ?>
+        <?= $form->field($model, 'matricula', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'value' => '']]) ?>
 
         <?php  if($model->scenario == 'web') {
             echo $form->field($model, 'password')->passwordInput();
@@ -30,5 +30,15 @@ use yii\helpers\Html;
                 <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
         </div>
-
+<?php
+            if (Yii::$app->session->hasFlash("success")) {
+                echo '<div class="alert alert-success" role="alert">' . Yii::$app->session->getFlash('success') . '</div>';
+            }
+            if (Yii::$app->session->hasFlash("error")) {
+                echo '<div class="alert alert-error" role="alert">' . Yii::$app->session->getFlash('error') . '</div>';
+            }
+            if (!empty(Yii::$app->request->get("msg"))) {
+                echo '<div class="alert alert-success" role="alert"> Check-in realizado com sucesso! </div>';
+            }
+            ?>
     <?php ActiveForm::end(); ?>

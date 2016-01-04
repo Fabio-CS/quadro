@@ -29,14 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id_estado_emocional',
-            'tipo_estado_emocional',
-            'usuario',
-            'data',
-            'criado_por',
-            'criado_em',
-            'modificado_por',
-            'modificado_em',
-            'ativo',
+            [
+               'attribute' => 'tipoEstadoEmocional.nome',
+                'label' => 'Estado Emocional'
+            ],
+            [
+                'attribute' => 'usuarioO.nome_completo',
+                'label' => 'Colaborador'
+            ],
+            [
+                'attribute' => 'data',
+                'format' => ['date', 'dd/MM/Y'],
+            ]
         ],
     ]) ?>
 

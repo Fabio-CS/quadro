@@ -62,8 +62,12 @@ class EstadosEmocionaisController extends Controller
     {
         $model = new EstadosEmocionais();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_estado_emocional]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->data = date('Y-m-d');
+            $model->criado_por = Yii::$app->user->getId();
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_estado_emocional]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -109,12 +113,23 @@ class EstadosEmocionaisController extends Controller
      */
     public function actionCheckin()
     {
-        $searchModel = new EstadosEmocionaisSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new EstadosEmocionais();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+        if (Yii::$app->request->post()) {
+            $model->tipo_estado_emocional = Yii::$app->request->get("tipo_estado_emocional");
+            $model->usuario = Yii::$app->user->getId();
+            $model->data = date('Y-m-d');
+            $model->criado_por = Yii::$app->user->getId();
+            if($model->save()){
+                Yii::$app->session->setFlash('success', 'Check-in de estado emocional realizado com sucesso!');
+                Yii::$app->user->logout();
+                return $this->redirect(['usuarios/local', 'msg' => '1']);
+            }
+            Yii::$app->session->setFlash('error', 'Erro ao realizar o check-in');
+            $this->redirect(['usuarios/local']);
+        } 
+        return $this->render('checkin', [
+                'model' => $model,
         ]);
     }
     

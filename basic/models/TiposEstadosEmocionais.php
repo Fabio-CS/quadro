@@ -17,7 +17,6 @@ use Yii;
  */
 class TiposEstadosEmocionais extends \yii\db\ActiveRecord
 {
-    public $iconeimg;
     /**
      * @inheritdoc
      */
