@@ -29,16 +29,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'data_fim') ?>
 
-    <?php // echo $form->field($model, 'criado_por') ?>
-
-    <?php // echo $form->field($model, 'criado_em') ?>
-
-    <?php // echo $form->field($model, 'modificado_por') ?>
-
-    <?php // echo $form->field($model, 'modificado_em') ?>
-
-    <?php // echo $form->field($model, 'ativo') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Limpar', ['class' => 'btn btn-default']) ?>

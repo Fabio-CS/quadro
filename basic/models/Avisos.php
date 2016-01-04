@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\web\UploadedFile;
 
 use Yii;
 
@@ -39,11 +40,12 @@ class Avisos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'imagem', 'tempo_exibicao', 'data_inicio', 'data_fim', 'criado_por'], 'required'],
-            [['tempo_exibicao', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
-            [['data_inicio', 'data_fim', 'criado_em', 'modificado_em'], 'date'],
+            [['titulo', 'tempo_exibicao', 'data_inicio', 'data_fim'], 'required', 'on' => 'create'],
+            [['titulo', 'tempo_exibicao', 'data_inicio', 'data_fim'], 'required', 'on' => 'update'],
+            [['tempo_exibicao'], 'integer'],
+            [['data_inicio', 'data_fim'], 'date', 'format' => 'yyyy-mm-dd'],
             [['titulo'], 'string', 'max' => 100],
-            [['imagem'], 'file'],
+            [['imagem'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff'],
             [['descricao'], 'string', 'max' => 2000]
         ];
     }
@@ -83,5 +85,73 @@ class Avisos extends \yii\db\ActiveRecord
     public function getModificadoPor()
     {
         return $this->hasOne(Usuarios::className(), ['id_usuario' => 'modificado_por']);
+    }
+    
+    /**
+     * fetch stored image file name with complete path 
+     * @return string
+     */
+    public function getImageFile() 
+    {
+        return isset($this->imagem) ? Yii::$app->params['uploadPath'] . $this->imagem : null;
+    }
+
+    /**
+     * fetch stored image url
+     * @return string
+     */
+    public function getImageUrl() 
+    {
+        // return a default image placeholder if your source avatar is not found
+        $image = isset($this->imagem) ? $this->imagem : null;
+        return Yii::$app->params['uploadPath'] . $image;
+    }
+
+    /**
+    * Process upload of image
+    *
+    * @return mixed the uploaded image instance
+    */
+    public function uploadImage() {
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'imagem');
+
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+        $ext = end((explode(".", $image->name)));
+
+        // generate a unique file name
+        $this->imagem = Yii::$app->security->generateRandomString().".{$ext}";
+
+        // the uploaded image instance
+        return $image;
+    }
+
+    /**
+    * Process deletion of image
+    *
+    * @return boolean the status of deletion
+    */
+    public function deleteImage() {
+        $file = $this->getImageFile();
+
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return false;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
+
+        // if deletion successful, reset your file attributes
+        $this->foto = null;
+
+        return true;
     }
 }

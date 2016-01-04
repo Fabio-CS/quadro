@@ -16,22 +16,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Criar Avisos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Aviso', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id_aviso',
             'titulo',
             'descricao',
-            'imagem',
             'tempo_exibicao',
             'data_inicio',
             'data_fim',
+            [
+                'attribute' =>'imagem',
+                'format' => ['image',['width'=>'200','height'=>'300']],
+                'value' => 'imageUrl',
+                'filter' => false
+	    ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

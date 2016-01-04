@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             [
                 'attribute' =>'icone',
-                'value' => Yii::$app->params['uploadPath'].$model->icone,
+                'value' => $model->getImageUrl(),
                 'format' => ['image',['width'=>'200','height'=>'200']],
             ]
         ],

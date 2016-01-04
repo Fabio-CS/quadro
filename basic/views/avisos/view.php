@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Avisos */
 
-$this->title = $model->id_aviso;
+$this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Avisos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,16 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_aviso',
             'titulo',
             'descricao',
-            'imagem',
             'tempo_exibicao',
-            'data_inicio',
-            'data_fim',
-            'criado_por',
-            'criado_em',
-            'modificado_por',
-            'modificado_em',
-            'ativo',
+            [
+                'attribute' => 'data_inicio',
+                'format' => ['date', 'dd/MM/Y'],
+            ],
+            [
+                'attribute' => 'data_fim',
+                'format' => ['date', 'dd/MM/Y'],
+            ],
+            [
+                'attribute' =>'imagem',
+                'value' => $model->getImageUrl(),
+                'format' => ['image',['width'=>'600','height'=>'800']],
+            ]
         ],
     ]) ?>
-
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 </div>
+
