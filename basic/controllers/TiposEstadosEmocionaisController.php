@@ -128,9 +128,13 @@ class TiposEstadosEmocionaisController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        unlink($model->getImageFile());
-        $model->delete();
-        return $this->redirect(['index']);
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            Yii::$app->session->setFlash('error', 'Erro ao deletar usuário');
+            return $this->render(['index']);
+        }
     }
 
     /**

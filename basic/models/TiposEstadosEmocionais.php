@@ -34,6 +34,7 @@ class TiposEstadosEmocionais extends \yii\db\ActiveRecord
             [['nome', 'icone'], 'required', 'on' => 'create'],
             [['nome'], 'required', 'on' => 'update'],
             [['nome'], 'string', 'max' => 45],
+            [['privado'], 'integer'],
             [['icone'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff']
         ];
     }
@@ -47,6 +48,7 @@ class TiposEstadosEmocionais extends \yii\db\ActiveRecord
             'id_tipo_estado_emocional' => 'ID',
             'nome' => 'Nome',
             'icone' => 'Ícone',
+            'privado' => 'Visibilidade',
             'ativo' => 'Ativo',
         ];
     }

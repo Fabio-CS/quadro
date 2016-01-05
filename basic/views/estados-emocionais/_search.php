@@ -20,12 +20,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'tipo_estado_emocional') ?>
 
     <?= $form->field($model, 'usuario') ?>
+    
+    <?= $form->field($model, 'motivo') ?>
 
     <?= $form->field($model, 'data') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Limpar', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

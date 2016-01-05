@@ -38,8 +38,9 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_estado_emocional', 'usuario'], 'required'],
+            [['tipo_estado_emocional', 'usuario', 'data'], 'required'],
             [['tipo_estado_emocional', 'usuario'], 'integer'],
+            [['motivo'], 'string', 'max' => '2000'],
             [['data'], 'date', 'format' => 'yyyy-mm-dd']
         ];
     }
@@ -54,6 +55,7 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
             'tipo_estado_emocional' => 'Tipo Estado Emocional',
             'usuario' => 'Usuario',
             'data' => 'Data',
+            'motivo' => 'Motivo',
             'criado_por' => 'Criado Por',
             'criado_em' => 'Criado Em',
             'modificado_por' => 'Modificado Por',

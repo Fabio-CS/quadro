@@ -5,5 +5,6 @@ return [
     'uploadPath' => 'uploads/',
     'Admin' => 'Administrador',
     'Colab' => 'Colaborador',
-    'Dev' => 'Developer'
+    'Dev' => 'Developer',
+    'estadosRuins' => ['Irritado']
 ];

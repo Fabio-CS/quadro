@@ -18,7 +18,7 @@ class TiposEstadosEmocionaisSearch extends TiposEstadosEmocionais
     public function rules()
     {
         return [
-            [['id_tipo_estado_emocional', 'ativo'], 'integer'],
+            [['id_tipo_estado_emocional', 'privado', 'ativo'], 'integer'],
             [['nome', 'icone'], 'safe'],
         ];
     }
@@ -57,7 +57,8 @@ class TiposEstadosEmocionaisSearch extends TiposEstadosEmocionais
 
         $query->andFilterWhere([
             'id_tipo_estado_emocional' => $this->id_tipo_estado_emocional,
-            'ativo' => $this->ativo,
+            'privado' => $this->privado,
+            'ativo' => 1
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])

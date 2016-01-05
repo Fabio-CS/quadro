@@ -38,10 +38,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Colaborador'
             ],
             [
+                'attribute' => 'motivo'
+            ],
+            [
                 'attribute' => 'data',
                 'format' => ['date', 'dd/MM/Y'],
             ]
         ],
     ]) ?>
-
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 </div>

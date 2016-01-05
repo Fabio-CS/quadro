@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3>Selecione abaixo seu estado emocional de hoje:</h3>
     <ul>
     <?php
-    $estadosEmocionais = TiposEstadosEmocionais::find()->where("nome != 'Férias'")->andWhere("nome != 'Doente'")->all();
+    $estadosEmocionais = TiposEstadosEmocionais::find()->where(['privado' => 0, 'ativo' => 1])->all();
     foreach ($estadosEmocionais as $estadoEmocional) {
     ?>
         <li> <?= Html::a(

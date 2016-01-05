@@ -14,6 +14,7 @@ use kartik\file\FileInput;
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'privado')->radioList(['1'=>'Privado', '0'=>'Público']); ?>
     <?= $form->field($model, 'icone')->widget(FileInput::classname(),
         ($model->scenario == "create") ?
         [ 

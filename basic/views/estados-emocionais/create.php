@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
-$this->title = 'Create Estados Emocionais';
+$this->title = 'Criar Estado Emocional';
 $this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

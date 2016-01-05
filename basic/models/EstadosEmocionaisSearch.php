@@ -64,7 +64,7 @@ class EstadosEmocionaisSearch extends EstadosEmocionais
             'criado_em' => $this->criado_em,
             'modificado_por' => $this->modificado_por,
             'modificado_em' => $this->modificado_em,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
         ]);
 
         return $dataProvider;

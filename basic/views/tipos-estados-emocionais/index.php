@@ -26,6 +26,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_tipo_estado_emocional',
             'nome',
             [
+                'attribute' => 'privado',
+                'value' => function ($data){
+                    return $data->privado ? "Privado" : "Público";
+                }
+            ],
+            [
                 'attribute' =>'icone',
                 'format' => ['image',['width'=>'50','height'=>'50']],
                 'value' => 'imageUrl',

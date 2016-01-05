@@ -34,6 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Colaborador'
             ],
             [
+               'attribute' => 'motivo'
+            ],
+            [
                 'attribute' => 'data',
                 'format' => ['date', 'dd/MM/Y'],
             ],
