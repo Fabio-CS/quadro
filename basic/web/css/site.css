@@ -11,14 +11,15 @@ body {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 3% 2% 2%;
 }
 
 .footer {
-    height: 60px;
+    height: 40px;
     background-color: #f5f5f5;
     border-top: 1px solid #ddd;
-    padding-top: 20px;
+    padding-top: 10px;
+    display: none;
 }
 
 .jumbotron {
@@ -90,9 +91,102 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+
+/**************************************/
+.container {
+    width: 98% !important;
+}
+
 .estados-emocionais-checkin ul li {
     display: inline-block;
     text-align: center;
     font-size: 18px;
     font-weight: 500;
+}
+
+.site-index{
+    margin-top: 1%;
+}
+
+.site-index .body-content h1{
+    text-align: left;
+    margin-top: 0;
+}
+
+.titulo h1 {
+    font-size: 3vw;
+    margin-top: 1%;
+    text-align: center;
+    
+}
+.titulo h3 {
+    font-size: 1.5vw;
+    margin-top: 1%;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.humores-mural {
+    padding-left: 0;
+}
+
+.humores-mural li{
+    display: inline-block;
+    list-style: none;
+    width: 7%;
+    width: 20%;
+    position: relative;
+    float: left;
+    margin-left: 0.5%;
+    margin-left: 1%;
+}
+
+.humores-mural li p{
+    text-align: center;
+    font-size: 40px;
+    font-size: 1vw;
+    position: relative;
+}
+
+.humores-mural li div{
+    position: relative;
+}
+.humores-mural .foto-perfil{
+    width: 100%;
+    position: relative;
+    z-index: 100;
+}
+
+.humores-mural .estado-emocional{
+    width: 30%;
+    position: absolute;
+    right: 35%;
+    bottom: 2%;
+    z-index: 101;
+}
+
+.humores-mural .estado-emocional.secundario{
+    width: 23%;
+    right: 5%;
+}
+
+.humores-mural .aniversario1{
+    width: 30%;
+    top: 2%;
+    left: 5%;
+    position: absolute;
+    z-index: 101;
+}
+
+.humores-mural .aniversario2{
+    width: 30%;
+    top: 2%;
+    right: 5%;
+    position: absolute;
+    z-index: 101;
+}
+
+.humores-mural p{
+    margin-bottom: 10px;
+    line-height: 1;
 }

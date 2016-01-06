@@ -5,47 +5,50 @@
 $this->title = 'Quadro Emocional';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
+    <!--<div class="titulo">
+        <h1>Global Eletronics</h1>
+        <h3>Slogan aqui!</h3>
+    </div>-->
     <div class="body-content">
-
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+            <div class="col-lg-10">
+                <h1>Humores</h1>
+                <ul class="humores-mural">
+                    <li>
+                        <div>
+                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
+                            <img class="estado-emocional" src="uploads/vbOFI89OWF9gr5xgPRGpYgL4MpdXfolR.png">
+                        </div>
+                        <p>Nome da Pessoa</p>
+                    </li>
+                    <li>
+                        <div>
+                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
+                            <img class="estado-emocional" src="uploads/vZTrWCRq4yhpk_EMwMM8qZh43SYtR5wL.png">
+                        </div>
+                        <p>Nome da Pessoa</p>
+                    </li>
+                    <li>
+                        <div>
+                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
+                            <img class="estado-emocional" src="uploads/yHyp2mB-zRb8U4Bit3L1QnM3KVvv22EL.png">
+                            <img class="aniversario1" src="uploads/party1.png">
+                            <img class="aniversario2" src="uploads/party2.png">
+                        </div>
+                        <p>Nome da Pessoa</p>
+                    </li>
+                    <li>
+                        <div>
+                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
+                            <img class="estado-emocional" src="uploads/D66eV1z3iREoWnpUmUKoxm94RALhgHA_.png">
+                            <img class="estado-emocional secundario" src="uploads/3eExOW0WOT4_OWXtuAXJ2Xqh3a32_dbu.png">
+                        </div>
+                        <p>Nome da Pessoa</p>
+                    </li>
+                </ul>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col-lg-2">
+                <h1>Avisos</h1>
             </div>
         </div>
 
