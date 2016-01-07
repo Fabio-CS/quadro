@@ -95,4 +95,9 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
     }
+    
+    public function getIconeUrl(){
+        $tipoEstadoEmocional = $this->getTipoEstadoEmocional()->one();
+        return $tipoEstadoEmocional->getImageUrl();
+    }
 }

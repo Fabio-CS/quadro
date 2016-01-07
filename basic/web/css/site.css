@@ -95,6 +95,7 @@ a.desc:after {
 /**************************************/
 .container {
     width: 98% !important;
+    height: 100%;
 }
 
 .estados-emocionais-checkin ul li {
@@ -128,33 +129,41 @@ a.desc:after {
 
 .humores-mural {
     padding-left: 0;
+    height: 650px;
+    min-height: 650px;
 }
 
 .humores-mural li{
     display: inline-block;
     list-style: none;
     width: 7%;
-    width: 20%;
+    height: 24%;
     position: relative;
     float: left;
     margin-left: 0.5%;
-    margin-left: 1%;
+    margin-bottom: 0.7%;
 }
 
 .humores-mural li p{
     text-align: center;
     font-size: 40px;
     font-size: 1vw;
+    height: 25%;
+    margin-bottom: 0;
     position: relative;
+    margin-top: 5%;
 }
 
 .humores-mural li div{
     position: relative;
+    height: 70%;
 }
 .humores-mural .foto-perfil{
     width: 100%;
+    height: 100%;
     position: relative;
     z-index: 100;
+    object-fit: cover;
 }
 
 .humores-mural .estado-emocional{

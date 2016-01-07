@@ -185,7 +185,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEstadosEmocionais1()
+    public function getEstadosEmocionais()
     {
         return $this->hasMany(EstadosEmocionais::className(), ['usuario' => 'id_usuario']);
     }
@@ -277,6 +277,32 @@ class Usuarios extends ActiveRecord implements IdentityInterface
              return true;
          }
          return false;
+     }
+     
+     public function isBirthday(){
+         $birthday = $this->data_nasc;
+         if(date('m-d') == substr($birthday,5,5) or (date('y')%4 <> 0 and substr($birthday,5,5)=='02-29' and date('m-d')=='02-28')){
+             return true;
+         }else{
+             return false;
+         }
+     }
+     
+     public function getEstadoEmocionalPrincipal(){
+         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d'), 'criado_por' => $this->id_usuario ])->orderBy(["id_estado_emocional" => "SORT_DESC"])->one();
+         return $estadoEmocional;    
+     }
+     
+     public function getEstadoEmocionalSecundario(){
+         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d')])->andWhere(['not', ['criado_por' => $this->id_usuario]])->orderBy(["id_estado_emocional" => "SORT_DESC"])->one();
+         return $estadoEmocional;
+     }
+     
+     public function getDisplayName(){
+        $r = explode(' ', $this->nome_completo);
+	$first = reset($r);
+	$last = end($r);
+	return $first." ".$last;
      }
      
      public function getMenu(){
