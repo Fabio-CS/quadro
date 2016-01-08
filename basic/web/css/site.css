@@ -93,6 +93,35 @@ a.desc:after {
 
 
 /**************************************/
+.breadcrumb {
+    margin-top: 15px;
+}
+
+.carousel {
+    height: 650px;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel-indicators, .carousel-control{
+    display: none;
+}
+
+.carousel p {
+    font-size: 1vw;
+}
+
+.carousel h2 {
+    font-size: 1.5vw;
+}
+
+.aviso_image .image_aviso{
+    width:100%;
+    margin: 0 0 5% 0;
+}
+
 .container {
     width: 98% !important;
     height: 100%;

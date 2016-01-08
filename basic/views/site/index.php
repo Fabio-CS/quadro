@@ -2,6 +2,8 @@
 
 /* @var $this yii\web\View */
 use app\models\Usuarios;
+use app\models\Avisos;
+use yii\bootstrap\Carousel;
 
 $this->title = 'Quadro Emocional';
 ?>
@@ -70,6 +72,30 @@ $this->title = 'Quadro Emocional';
             </div>
             <div class="col-lg-2">
                 <h1>Avisos</h1>
+                <?php
+                        $avisos = Avisos::getActiveAvisos();
+
+                        $carouselData =[];
+                        foreach ($avisos as $key => $aviso) {
+                            $item = [];
+                            if($aviso->hasImage()){
+                                $item['content'] = "<div class='aviso_image'><h2 class='titulo_carousel'>$aviso->titulo</h2><img src='".$aviso->getImageUrl()."' class='image_aviso'><p class='caption_carousel'>$aviso->descricao</p></div>";
+                                
+                            }else{
+                                $item['content'] = "<div class='aviso_texto'><h2 class='titulo_aviso'>$aviso->titulo</h2><p class='descricao_aviso'>$aviso->descricao</p></div>";
+                            }
+                            
+                            $item['options'] = [
+                                'interval' => ($aviso->tempo_exibicao * 1000),
+                                'controls' => false
+                            ];
+                            $carouselData[] = $item;
+                        }
+                        
+                        echo Carousel::widget([
+                                            'items' => $carouselData
+                                        ]);
+                ?>
             </div>
         </div>
 

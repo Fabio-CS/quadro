@@ -2,7 +2,6 @@
 
 namespace app\models;
 use yii\web\UploadedFile;
-
 use Yii;
 
 /**
@@ -103,7 +102,7 @@ class Avisos extends \yii\db\ActiveRecord
     public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $image = isset($this->imagem) ? $this->imagem : null;
+        $image = (isset($this->imagem) && !empty($this->imagem)) ? $this->imagem : 'sem_imagem.jpg';
         return Yii::$app->params['uploadPath'] . $image;
     }
 
@@ -153,5 +152,41 @@ class Avisos extends \yii\db\ActiveRecord
         $this->foto = null;
 
         return true;
+    }
+    
+    public function isActive(){
+        $today = strtotime(date("Y-m-d"));
+        $dateBegin = strtotime($this->data_inicio);
+        $dateEnd = strtotime($this->data_fim);
+        
+        if ($today <= $dateEnd && $today >= $dateBegin){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public static function getActiveAvisos(){
+       //return Avisos::find()->where(['ativo' => 1])->andWhere(['>=', ['data_fim' => 'cast(now() as date)']])->andWhere(['<=', ['data_inicio' => 'cast(now() as date)']])->all();
+       $arrayAvisos = Yii::$app->db->createCommand("SELECT * FROM `avisos` where `data_fim` >= cast(now() as date) and `data_inicio` <= cast(now() as date) and `ativo` = 1")->queryAll();
+       $arrayResult = [];
+       foreach ($arrayAvisos as $key => $value) {
+           $aviso = new Avisos();
+           $aviso->id_aviso = $value['id_aviso'];
+           $aviso->titulo = $value['titulo'];
+           $aviso->imagem = $value['imagem'];
+           $aviso->descricao = $value['descricao'];
+           $aviso->tempo_exibicao = $value['tempo_exibicao'];
+           $arrayResult[] = $aviso;
+       }
+       return $arrayResult;
+    }
+    
+    public function hasImage(){
+        if(isset($this->imagem) && !empty($this->imagem)){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

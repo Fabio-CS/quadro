@@ -66,10 +66,12 @@ class AvisosController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $image = $model->uploadImage();
             $model->criado_por = Yii::$app->user->getId();
-            if($model->save() && $image !== false){
-                    // upload only if valid uploaded file instance found
-                    $path = $model->getImageFile();
-                    $image->saveAs($path);
+            if($model->save()){
+                    if ($image !== false) {
+                        // upload only if valid uploaded file instance found
+                        $path = $model->getImageFile();
+                        $image->saveAs($path);                    
+                    }
                     return $this->redirect(['view', 'id' => $model->id_aviso]);
                 }
                 //error saving model
