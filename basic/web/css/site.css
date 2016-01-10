@@ -228,3 +228,36 @@ a.desc:after {
     margin-bottom: 10px;
     line-height: 1;
 }
+
+.menu-admin{
+    text-align: center;
+}
+
+.menu-admin ul{
+    margin-left: auto;
+    margin-right: auto;
+    display: inline;
+    padding-left: 0;
+}
+
+.menu-admin li{
+    display: inline-block;
+    list-style: none;
+    background-color: #ccc;
+    padding: 10px;
+    width: 120px;
+    height: 130px;
+    margin: 10px;
+    text-align: center;
+}
+
+.menu-admin li img {
+    width: 90%;
+}
+
+.menu-admin li p{
+    text-align: center;
+    font-size: 15px;
+    margin-top: 5px;
+    color: #000;
+}

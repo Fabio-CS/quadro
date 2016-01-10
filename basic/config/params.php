@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => 'smileboar@redware.com.br',
+    'systemName' => 'Smileboard',
     'uploadPath' => 'uploads/',
     'Admin' => 'Administrador',
     'Colab' => 'Colaborador',

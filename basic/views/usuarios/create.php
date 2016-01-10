@@ -1,12 +1,15 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 
 $this->title = 'Criar Usuários';
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
 $this->params['breadcrumbs'][] = ['label' => 'Usuários', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $model->scenario = 'create'

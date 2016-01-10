@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use app\models\TiposEstadosEmocionais;
 use app\models\EstadosEmocionais;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EstadosEmocionaisSearch */
@@ -17,10 +18,52 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="site-menu-admin">
     <h1><?= Html::encode($this->title) ?></h1>
 </div>
-
-    <p>
-        Aqui vai os links para as funcionalidades.
-    </p>
+<div class="menu-admin">
+    <ul>
+        <li>
+            <a href="<?= Url::toRoute(["avisos/index"])?>">
+            <img src="images/avisos.png">
+            <p>Avisos</p>
+            </a>
+        </li>
+  <!--        <li>
+            <a href="<?= Url::toRoute(["curtidas/index"])?>">
+            <img src="images/curtidas.png">
+            <p>Curtidas</p>
+            </a>
+        </li>
+      <li>
+            <a href="<?= Url::toRoute(["graficos/index"])?>">
+            <img src="images/graficos.png">
+            <p>Gráficos</p>
+            </a>
+        </li> -->
+        <li>
+            <a href="<?= Url::toRoute(["estados-emocionais/index"])?>">
+            <img src="images/humores.png">
+            <p>Humores</p>
+            </a>
+        </li>
+ <!--       <li>
+            <a href="<?= Url::toRoute(["mensagens/index"])?>">
+            <img src="images/mensagens.png">
+            <p>Mensagens</p>
+            </a>
+        </li> 
+        <li>
+            <a href="<?= Url::toRoute(["periodos-afastamento/index"])?>">
+            <img src="images/periodo-afastamento.png">
+            <p>Afastamentos</p>
+            </a>
+        </li>-->
+        <li>
+            <a href="<?= Url::toRoute(["usuarios/index"])?>">
+            <img src="images/usuarios.png">
+            <p>Usuários</p>
+            </a>
+        </li>
+    </ul>
+</div>
     <?php
         $tipo_estado_emocional_ruim = TiposEstadosEmocionais::find()->select('id_tipo_estado_emocional')->where(['nome' => Yii::$app->params['estadosRuins']])->all();
         $ids = [];
@@ -71,5 +114,3 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-</div>

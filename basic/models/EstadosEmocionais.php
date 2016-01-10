@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-
+use app\models\Usuarios;
 use Yii;
 
 /**
@@ -99,5 +99,34 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function getIconeUrl(){
         $tipoEstadoEmocional = $this->getTipoEstadoEmocional()->one();
         return $tipoEstadoEmocional->getImageUrl();
+    }
+    
+    public function isBadState(){
+        if (in_array($this->tipoEstadoEmocional->nome, Yii::$app->params["estadosRuins"])){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function sendEmail(){
+        if($this->isBadState()){
+        $usuario = $this->usuarioO;
+        $body = "<h1>Colaborador com estado emocional ruim</h1>".
+                "<p>O colaborador " . "<b>" . $usuario->nome_completo . "</b> do setor <b>". $usuario->setor ."</b> " .
+                "apresentou um estado emocional ruim <i>(". $this->tipoEstadoEmocional->nome .")</i> durante o check-in de hoje! </p>".
+                "<p> Por favor, tome as medidas necessárias e acesse o sistema para registrar a solução apresentada. </p>".
+                "<p></p>".
+                "Atenciosamente,<br>".Yii::$app->params["systemName"];
+        $subject = "Alerta do Sistema ". Yii::$app->params["systemName"] ." - colaborador com estado emocional ruim";
+        $emails = Usuarios::getAdminsEmails();
+        Yii::$app->mailer->compose()
+                ->setTo($emails)
+                ->setFrom([Yii::$app->params["adminEmail"] => Yii::$app->params["systemName"]])
+                ->setSubject($subject)
+                ->setHtmlBody($body)
+                ->send();
+        }
+    
     }
 }

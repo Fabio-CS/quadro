@@ -2,12 +2,15 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EstadosEmocionaisSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Estados Emocionais';
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estados-emocionais-index">

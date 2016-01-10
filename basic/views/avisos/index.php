@@ -2,12 +2,16 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AvisosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Avisos';
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="avisos-index">
@@ -31,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_fim',
             [
                 'attribute' =>'imagem',
-                'format' => ['image',['width'=>'200','height'=>'300']],
+                'format' => ['image',['height'=>'300']],
                 'value' => 'imageUrl',
                 'filter' => false
 	    ],

@@ -23,7 +23,14 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
-
+<?php 
+    $useragent = Yii::$app->request->userAgent;
+    if (in_array("Android", explode(" ", $useragent))){
+        $mobile = true;
+    }else{
+        $mobile = false;
+    }
+?>
 <div class="wrap">
     <?php
     NavBar::begin([
@@ -43,6 +50,11 @@ AppAsset::register($this);
                     'url' => ['/usuarios/logout'],
                     'linkOptions' => ['data-method' => 'post']
                 ],
+            [
+                'label' => 'Login Local',
+                'url' => ["/usuarios/local"],
+                'visible' => $mobile
+            ],
         ],
     ]);
     NavBar::end();
@@ -58,7 +70,6 @@ AppAsset::register($this);
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; Global Electronics <?= date('Y') ?></p>
-
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>

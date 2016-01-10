@@ -5,7 +5,7 @@ use app\models\Usuarios;
 use app\models\Avisos;
 use yii\bootstrap\Carousel;
 
-$this->title = 'Quadro Emocional';
+$this->title = Yii::$app->params["systemName"];
 ?>
 <div class="site-index">
     <!--<div class="titulo">

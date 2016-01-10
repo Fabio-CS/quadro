@@ -2,11 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Avisos */
 
 $this->title = $model->titulo;
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
 $this->params['breadcrumbs'][] = ['label' => 'Avisos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -43,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' =>'imagem',
                 'value' => $model->getImageUrl(),
-                'format' => ['image',['width'=>'600','height'=>'800']],
+                'format' => ['image',['height'=>'800']],
             ]
         ],
     ]) ?>

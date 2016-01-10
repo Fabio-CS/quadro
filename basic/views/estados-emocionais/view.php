@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
 $this->title = $model->id_estado_emocional;
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
 $this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

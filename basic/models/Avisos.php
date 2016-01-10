@@ -59,7 +59,7 @@ class Avisos extends \yii\db\ActiveRecord
             'titulo' => 'Título',
             'descricao' => 'Descrição',
             'imagem' => 'Imagem',
-            'tempo_exibicao' => 'Tempo de exibição',
+            'tempo_exibicao' => 'Tempo de exibição (segundos)',
             'data_inicio' => 'Data inicial de exibição',
             'data_fim' => 'Data final de exibição',
             'criado_por' => 'Criado por',
@@ -102,8 +102,8 @@ class Avisos extends \yii\db\ActiveRecord
     public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $image = (isset($this->imagem) && !empty($this->imagem)) ? $this->imagem : 'sem_imagem.jpg';
-        return Yii::$app->params['uploadPath'] . $image;
+        $image = (isset($this->imagem) && !empty($this->imagem)) ? Yii::$app->params['uploadPath'].$this->imagem : '/images/sem_imagem.jpg';
+        return $image;
     }
 
     /**

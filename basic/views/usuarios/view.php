@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuarios */
 
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' =>'photo',
                 'value' => $model->getImageUrl(),
-                'format' => ['image',['width'=>'200','height'=>'300']],
+                'format' => ['image',['height'=>'300']],
             ],
         ],
     ]) ?>

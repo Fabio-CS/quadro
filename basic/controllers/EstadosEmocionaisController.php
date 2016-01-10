@@ -123,6 +123,7 @@ class EstadosEmocionaisController extends Controller
             $model->data = date('Y-m-d');
             $model->criado_por = Yii::$app->user->getId();
             if($model->save()){
+                $model->sendEmail();
                 Yii::$app->session->setFlash('success', 'Check-in de estado emocional realizado com sucesso!');
                 Yii::$app->user->logout();
                 return $this->redirect(['usuarios/local', 'msg' => '1']);

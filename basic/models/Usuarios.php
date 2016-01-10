@@ -315,6 +315,16 @@ class Usuarios extends ActiveRecord implements IdentityInterface
          }
          return ['site/index'];
      }
+     
+     public static function getAdminsEmails(){
+        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere(["tipos_usuario.nome" => Yii::$app->params['Admin']])->all();
+        $emails = array();
+        foreach ($usuarios as $usuario) {
+            $emails[$usuario->email] = $usuario->nome_completo;
+        }
+        return $emails;    
+     }
+     
      /**
      * Identity Interface Implementation
      */
