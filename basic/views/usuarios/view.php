@@ -7,6 +7,11 @@ use yii\helpers\Url;
 /* @var $model app\models\Usuarios */
 
 $this->title = $model->nome_completo;
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+} else if (Yii::$app->user->identity->isDev()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Developer', 'url' => Url::toRoute(['site/menu-developer'])];
+}
 $this->params['breadcrumbs'][] = ['label' => 'Usuários', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -14,7 +14,7 @@ use app\models\Usuarios;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'usuario')->dropdownList(
+    <?= $form->field($model, 'id_usuario')->dropdownList(
             ArrayHelper::map(Usuarios::find()->where(['ativo' => 1])->orderBy('nome_completo')->all(), 'id_usuario', 'nome_completo'), ['prompt'=>'Selecione o usuário']); ?>
 
     <?= $form->field($model, 'motivo')->textarea(['maxlength' => true]) ?>

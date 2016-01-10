@@ -17,10 +17,9 @@ $this->title = Yii::$app->params["systemName"];
             <div class="col-lg-10">
                 <h1>Humores</h1>
                 <ul class="humores-mural">
-                    <?php   $usuarios = Usuarios::find()->where(['ativo' => 1])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
-                            foreach ($usuarios as $key => $usuario) {
-                                
-                            
+                    <?php   
+                            $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
+                            foreach ($usuarios as $key => $usuario) {        
                     ?>
                     <li>
                         <div>
@@ -93,7 +92,10 @@ $this->title = Yii::$app->params["systemName"];
                         }
                         
                         echo Carousel::widget([
-                                            'items' => $carouselData
+                                            'items' => $carouselData,
+                                            'options' => [
+                                                'class' => 'slide'
+                                                ]
                                         ]);
                 ?>
             </div>

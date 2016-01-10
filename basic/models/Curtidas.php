@@ -43,7 +43,7 @@ class Curtidas extends \yii\db\ActiveRecord
     {
         return [
             'id_curtida' => 'ID',
-            'usuario' => 'Usuário',
+            'id_usuario' => 'Usuário',
             'motivo' => 'Motivo',
             'criado_em' => 'Enviada em'
         ];
@@ -52,8 +52,8 @@ class Curtidas extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioO()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
+        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'id_usuario']);
     }
 }

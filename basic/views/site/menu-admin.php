@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
            $ids[] = $value->id_tipo_estado_emocional;
         }
         $dataProvider = new ActiveDataProvider([
-            'query' => EstadosEmocionais::find()->where(['tipo_estado_emocional' => $ids, 'motivo' => ""]),
+            'query' => EstadosEmocionais::find()->where(['id_tipo_estado_emocional' => $ids, 'motivo' => ""]),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -92,11 +92,11 @@ $this->params['breadcrumbs'][] = $this->title;
                'label' => 'Estado Emocional'
             ],*/
             [
-                'attribute' => 'usuarioO.nome_completo',
+                'attribute' => 'usuario.nome_completo',
                 'label' => 'Colaborador'
             ],
             [
-                'attribute' => 'usuarioO.setor',
+                'attribute' => 'usuario.setor',
                 'label' => 'Setor'
             ],
             [

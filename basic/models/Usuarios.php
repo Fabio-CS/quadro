@@ -46,18 +46,17 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['num_matricula', 'nome_completo', 'tipo_usuario'], 'required'],
+            [['num_matricula', 'nome_completo', 'id_tipo_usuario'], 'required'],
             [['password', 'password_repeat'], 'required', 'on'=>'create'],
             ['password', 'string', 'min' => 5],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Senhas não conferem", 'on' => 'create' ],
             [['data_nasc'], 'date', 'format' => 'yyyy-mm-dd'],
-            [['tipo_usuario'], 'integer'],
+            [['id_tipo_usuario'], 'integer'],
             [['num_matricula', 'funcao', 'setor'], 'string', 'max' => 45],
             [['nome_completo'], 'string', 'max' => 100],
             [['email'], 'string', 'max' => 50],
             [['email'], 'email'],
             [['foto'], 'file', 'extensions' => 'png, jpg, jpeg, tif, tiff', 'mimeTypes' => 'image/jpeg, image/jpg, image/png, image/tif, image/tiff'],
-            [['num_matricula'], 'unique'],
             ['password', SenhaValidator::className(), 'skipOnEmpty' => 'true', 'on' => 'update'],
             ['password_repeat', SenhaValidator::className(), 'skipOnEmpty' => 'true', 'on' => 'update']
         ];
@@ -79,7 +78,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
             'email' => 'E-mail',
             'password' => 'Senha',
             'password_repeat' => 'Confirme a senha',
-            'tipo_usuario' => 'Tipo de Usuário',
+            'id_tipo_usuario' => 'Tipo de Usuário',
             'ativo' => 'Ativo',
             'criado_por' => 'Criado Por',
             'criado_em' => 'Criado Em',
@@ -179,7 +178,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getCurtidas()
     {
-        return $this->hasMany(Curtidas::className(), ['usuario' => 'id_usuario']);
+        return $this->hasMany(Curtidas::className(), ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -187,7 +186,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getEstadosEmocionais()
     {
-        return $this->hasMany(EstadosEmocionais::className(), ['usuario' => 'id_usuario']);
+        return $this->hasMany(EstadosEmocionais::className(), ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -227,7 +226,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getPeriodosAfastamentos()
     {
-        return $this->hasMany(PeriodosAfastamento::className(), ['usuario' => 'id_usuario']);
+        return $this->hasMany(PeriodosAfastamento::className(), ['id_usuario' => 'id_usuario']);
     }
 
     /**
@@ -235,7 +234,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getTipoUsuario()
     {
-        return $this->hasOne(TiposUsuario::className(), ['id_tipo_usuario' => 'tipo_usuario']);
+        return $this->hasOne(TiposUsuario::className(), ['id_tipo_usuario' => 'id_tipo_usuario']);
     }
     
     /**

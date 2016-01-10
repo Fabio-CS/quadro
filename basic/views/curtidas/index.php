@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             'id_curtida',
-            'usuarioO.nome_completo',
+            'usuario.nome_completo',
             'motivo',
             ['class' => 'yii\grid\ActionColumn'],
         ],

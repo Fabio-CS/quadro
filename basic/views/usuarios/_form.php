@@ -35,7 +35,7 @@ use app\models\TiposUsuario;
 
     <?= $form->field($model, 'password_repeat')->passwordInput() ?>
 
-    <?= $form->field($model, 'tipo_usuario')->dropdownList(
+    <?= $form->field($model, 'id_tipo_usuario')->dropdownList(
             ArrayHelper::map(TiposUsuario::find()->where(['ativo' => 1])->all(), 'id_tipo_usuario', 'nome'), ['prompt'=>'Selecione o tipo de usuário']); ?>
 
     <div class="form-group">

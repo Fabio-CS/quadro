@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
         <li> <?= Html::a(
                     Html::img($estadoEmocional->getImageUrl(),['width'=>'200', 'height' => '200']),
-                    Url::toRoute(['estados-emocionais/checkin', 'tipo_estado_emocional' => $estadoEmocional->id_tipo_estado_emocional]),
+                    Url::toRoute(['estados-emocionais/checkin', 'id_tipo_estado_emocional' => $estadoEmocional->id_tipo_estado_emocional]),
                    ['class' => 'btn',
                     'data' => [
                         'confirm' => 'Você está certo que quer selecionar '.$estadoEmocional->nome,

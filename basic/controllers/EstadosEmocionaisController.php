@@ -117,8 +117,8 @@ class EstadosEmocionaisController extends Controller
         $model = new EstadosEmocionais();
 
         if (Yii::$app->request->post()) {
-            $model->tipo_estado_emocional = Yii::$app->request->get("tipo_estado_emocional");
-            $model->usuario = Yii::$app->user->getId();
+            $model->id_tipo_estado_emocional = Yii::$app->request->get("id_tipo_estado_emocional");
+            $model->id_usuario = Yii::$app->user->getId();
             $model->motivo = "";
             $model->data = date('Y-m-d');
             $model->criado_por = Yii::$app->user->getId();

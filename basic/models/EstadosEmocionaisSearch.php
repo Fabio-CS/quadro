@@ -18,7 +18,7 @@ class EstadosEmocionaisSearch extends EstadosEmocionais
     public function rules()
     {
         return [
-            [['id_estado_emocional', 'tipo_estado_emocional', 'usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
+            [['id_estado_emocional', 'id_tipo_estado_emocional', 'id_usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
             [['data', 'criado_em', 'modificado_em'], 'safe'],
         ];
     }
@@ -57,8 +57,8 @@ class EstadosEmocionaisSearch extends EstadosEmocionais
 
         $query->andFilterWhere([
             'id_estado_emocional' => $this->id_estado_emocional,
-            'tipo_estado_emocional' => $this->tipo_estado_emocional,
-            'usuario' => $this->usuario,
+            'id_tipo_estado_emocional' => $this->id_tipo_estado_emocional,
+            'id_usuario' => $this->id_usuario,
             'data' => $this->data,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,

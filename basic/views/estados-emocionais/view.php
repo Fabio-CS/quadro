@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Estado Emocional'
             ],
             [
-                'attribute' => 'usuarioO.nome_completo',
+                'attribute' => 'usuario.nome_completo',
                 'label' => 'Colaborador'
             ],
             [

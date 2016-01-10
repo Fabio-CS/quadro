@@ -18,7 +18,7 @@ class UsuariosSearch extends Usuarios
     public function rules()
     {
         return [
-            [['id_usuario', 'tipo_usuario', 'ativo', 'criado_por', 'modificado_por'], 'integer'],
+            [['id_usuario', 'id_tipo_usuario', 'ativo', 'criado_por', 'modificado_por'], 'integer'],
             [['num_matricula', 'nome_completo', 'data_nasc', 'funcao', 'setor', 'foto', 'email', 'senha', 'criado_em', 'modificado_em'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class UsuariosSearch extends Usuarios
         $query->andFilterWhere([
             'id_usuario' => $this->id_usuario,
             'data_nasc' => $this->data_nasc,
-            'tipo_usuario' => $this->tipo_usuario,
+            'id_tipo_usuario' => $this->id_tipo_usuario,
             'ativo' => 1,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,

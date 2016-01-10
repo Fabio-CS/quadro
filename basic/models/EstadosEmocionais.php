@@ -38,8 +38,8 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tipo_estado_emocional', 'usuario', 'data'], 'required'],
-            [['tipo_estado_emocional', 'usuario'], 'integer'],
+            [['id_tipo_estado_emocional', 'id_usuario', 'data'], 'required'],
+            [['id_tipo_estado_emocional', 'id_usuario'], 'integer'],
             [['motivo'], 'string', 'max' => '2000'],
             [['data'], 'date', 'format' => 'yyyy-mm-dd']
         ];
@@ -52,8 +52,8 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     {
         return [
             'id_estado_emocional' => 'ID',
-            'tipo_estado_emocional' => 'Tipo Estado Emocional',
-            'usuario' => 'Usuario',
+            'id_tipo_estado_emocional' => 'Tipo Estado Emocional',
+            'id_usuario' => 'Usuario',
             'data' => 'Data',
             'motivo' => 'Motivo',
             'criado_por' => 'Criado Por',
@@ -85,15 +85,15 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
      */
     public function getTipoEstadoEmocional()
     {
-        return $this->hasOne(TiposEstadosEmocionais::className(), ['id_tipo_estado_emocional' => 'tipo_estado_emocional']);
+        return $this->hasOne(TiposEstadosEmocionais::className(), ['id_tipo_estado_emocional' => 'id_tipo_estado_emocional']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioO()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
+        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'id_usuario']);
     }
     
     public function getIconeUrl(){
@@ -111,7 +111,7 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     
     public function sendEmail(){
         if($this->isBadState()){
-        $usuario = $this->usuarioO;
+        $usuario = $this->usuario;
         $body = "<h1>Colaborador com estado emocional ruim</h1>".
                 "<p>O colaborador " . "<b>" . $usuario->nome_completo . "</b> do setor <b>". $usuario->setor ."</b> " .
                 "apresentou um estado emocional ruim <i>(". $this->tipoEstadoEmocional->nome .")</i> durante o check-in de hoje! </p>".

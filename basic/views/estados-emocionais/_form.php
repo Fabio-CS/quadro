@@ -15,10 +15,10 @@ use app\models\TiposEstadosEmocionais;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'tipo_estado_emocional')->dropdownList(
+    <?= $form->field($model, 'id_tipo_estado_emocional')->dropdownList(
             ArrayHelper::map(TiposEstadosEmocionais::find()->where(['privado' => 0, 'ativo' => 1])->orderBy('nome')->all(), 'id_tipo_estado_emocional', 'nome'), ['prompt'=>'Selecione o tipo de estado emocional']); ?>
 
-    <?= $form->field($model, 'usuario')->dropdownList(
+    <?= $form->field($model, 'id_usuario')->dropdownList(
             ArrayHelper::map(Usuarios::find()->where(['ativo' => 1])->orderBy('nome_completo')->all(), 'id_usuario', 'nome_completo'), ['prompt'=>'Selecione o usuário']); ?>
     
     <?= $form->field($model, 'motivo')->textarea(['maxlength' => true]) ?>

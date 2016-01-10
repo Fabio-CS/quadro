@@ -3,7 +3,7 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'smileboard',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'sourceLanguage'=>'pt-br',

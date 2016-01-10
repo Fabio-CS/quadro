@@ -55,7 +55,7 @@ class TiposUsuario extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasMany(Usuarios::className(), ['tipo_usuario' => 'id_tipo_usuario']);
+        return $this->hasMany(Usuarios::className(), ['id_tipo_usuario' => 'id_tipo_usuario']);
     }
     
     /**

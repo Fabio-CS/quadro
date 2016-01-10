@@ -23,7 +23,7 @@ class TiposUsuarioController extends Controller
                 'only' => ['view', 'index', 'create', 'delete', 'update'],
                 'rules' => [
                     [
-                        'actions' => [''],
+                        'actions' => ['view', 'index', 'create', 'delete', 'update'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

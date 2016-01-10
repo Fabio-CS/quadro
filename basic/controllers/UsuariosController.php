@@ -19,7 +19,7 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
+            /*'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['view', 'index', 'create', 'delete', 'update', 'logout'],
                 'rules' => [
@@ -28,7 +28,7 @@ class UsuariosController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
-            ],
+            ],*/
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

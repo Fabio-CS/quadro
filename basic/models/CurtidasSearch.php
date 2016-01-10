@@ -18,7 +18,7 @@ class CurtidasSearch extends Curtidas
     public function rules()
     {
         return [
-            [['id_curtida', 'usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
+            [['id_curtida', 'id_usuario', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
             [['motivo', 'criado_em', 'modificado_em'], 'safe'],
         ];
     }
@@ -57,7 +57,7 @@ class CurtidasSearch extends Curtidas
 
         $query->andFilterWhere([
             'id_curtida' => $this->id_curtida,
-            'usuario' => $this->usuario,
+            'id_usuario' => $this->id_usuario,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,
             'modificado_por' => $this->modificado_por,

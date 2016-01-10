@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_curtida',
             [
-                'attribute' => 'usuarioO.nome_completo',
+                'attribute' => 'usuario.nome_completo',
                 'label' => 'Usuário'
 	    ],
             'motivo',

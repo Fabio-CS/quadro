@@ -11,6 +11,8 @@ use yii\helpers\Url;
 $this->title = 'Usuários';
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+} else if (Yii::$app->user->identity->isDev()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Developer', 'url' => Url::toRoute(['site/menu-developer'])];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
