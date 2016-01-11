@@ -4,6 +4,7 @@
 use app\models\Usuarios;
 use app\models\Avisos;
 use yii\bootstrap\Carousel;
+use yii\web\View;
 
 $this->title = Yii::$app->params["systemName"];
 ?>
@@ -75,8 +76,10 @@ $this->title = Yii::$app->params["systemName"];
                         $avisos = Avisos::getActiveAvisos();
 
                         $carouselData =[];
+                        $sumInterval = 0;
                         foreach ($avisos as $key => $aviso) {
                             $item = [];
+                            $sumInterval = $sumInterval + $aviso->tempo_exibicao;
                             if($aviso->hasImage()){
                                 $item['content'] = "<div class='aviso_image'><h2 class='titulo_carousel'>$aviso->titulo</h2><img src='".$aviso->getImageUrl()."' class='image_aviso'><p class='caption_carousel'>$aviso->descricao</p></div>";
                                 
@@ -85,17 +88,18 @@ $this->title = Yii::$app->params["systemName"];
                             }
                             
                             $item['options'] = [
-                                'interval' => ($aviso->tempo_exibicao * 1000),
+                                'data-interval' => ($aviso->tempo_exibicao * 1000),
                                 'controls' => false
                             ];
                             $carouselData[] = $item;
                         }
                         
                         echo Carousel::widget([
+                                            'id' => 'myCarousel',
                                             'items' => $carouselData,
-                                            'options' => [
-                                                'class' => 'slide'
-                                                ]
+                                            /*'clientOptions' => [
+                                                'interval' => false
+                                                ]*/
                                         ]);
                 ?>
             </div>
@@ -103,3 +107,11 @@ $this->title = Yii::$app->params["systemName"];
 
     </div>
 </div>
+
+<?php 
+        $totalInterval = $sumInterval * 1000;
+        $js  = " setTimeout( function() { window.location.reload() }, $totalInterval);";
+        $this->registerJs($js, View::POS_READY, 'refresh-page');
+        $this->registerJsFile("/system/web/js/slides_custom_interval.js", ['depends' => ['\yii\web\JqueryAsset'], 'position' =>  View::POS_READY], 'custom_interval_slides');
+        ?>
+

@@ -102,7 +102,7 @@ class Avisos extends \yii\db\ActiveRecord
     public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $image = (isset($this->imagem) && !empty($this->imagem)) ? Yii::$app->params['uploadPath'].$this->imagem : '/images/sem_imagem.jpg';
+        $image = (isset($this->imagem) && !empty($this->imagem)) ? Yii::$app->params['uploadPath'].$this->imagem : 'images/sem_imagem.jpg';
         return $image;
     }
 
