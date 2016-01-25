@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
+use app\models\Usuarios;
+use app\models\Avisos;
 
 class SiteController extends Controller
 {
@@ -49,7 +51,9 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $avisos = Avisos::getActiveAvisos();
+        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
+        return $this->render('index', ['usuarios' => $usuarios, 'avisos' => $avisos]);
     }
 
     public function actionLogin()
@@ -127,5 +131,4 @@ class SiteController extends Controller
     {
         return $this->render('menu-developer');
     }
-    
 }

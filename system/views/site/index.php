@@ -1,10 +1,10 @@
 <?php
 
 /* @var $this yii\web\View */
-use app\models\Usuarios;
-use app\models\Avisos;
+use yii\helpers\Html;
 use yii\bootstrap\Carousel;
 use yii\web\View;
+use yii\widgets\Pjax;
 
 $this->title = Yii::$app->params["systemName"];
 ?>
@@ -17,9 +17,10 @@ $this->title = Yii::$app->params["systemName"];
         <div class="row">
             <div class="col-lg-10">
                 <h1>Humores</h1>
-                <ul class="humores-mural">
+                    <?php Pjax::begin(); ?>
+                    <ul class="humores-mural">
+                    <?= Html::a("", ['site/index'], ['style' => 'display:none', 'id' => 'refreshHumores']);?>
                     <?php   
-                            $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
                             foreach ($usuarios as $key => $usuario) {        
                     ?>
                     <li>
@@ -44,37 +45,13 @@ $this->title = Yii::$app->params["systemName"];
                         <p><?= $usuario->getDisplayName() ?></p>
                     </li>
                     <?php } ?>
-                    <!--<li>
-                        <div>
-                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
-                            <img class="estado-emocional" src="uploads/vZTrWCRq4yhpk_EMwMM8qZh43SYtR5wL.png">
-                        </div>
-                        <p>Nome da Pessoa</p>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
-                            <img class="estado-emocional" src="uploads/yHyp2mB-zRb8U4Bit3L1QnM3KVvv22EL.png">
-                            <img class="aniversario1" src="images/party1.png">
-                            <img class="aniversario2" src="images/party2.png">
-                        </div>
-                        <p>Nome da Pessoa</p>
-                    </li>
-                    <li>
-                        <div>
-                            <img class="foto-perfil" src="uploads/LCUQA5NZotJyg-dzdl4zTenYkTiTttid.jpg" alt="Nome da Pessoa" title="Nome da Pessoa">
-                            <img class="estado-emocional" src="uploads/D66eV1z3iREoWnpUmUKoxm94RALhgHA_.png">
-                            <img class="estado-emocional secundario" src="uploads/3eExOW0WOT4_OWXtuAXJ2Xqh3a32_dbu.png">
-                        </div>
-                        <p>Nome da Pessoa</p>
-                    </li>-->
-                </ul>
+                    <?php Pjax::end(); ?>
+               </ul>
             </div>
             <div class="col-lg-2">
                 <h1>Avisos</h1>
+                <?= Html::a("", ['site/index'], ['style' => 'display:none', 'id' => 'refreshAvisos']);?>
                 <?php
-                        $avisos = Avisos::getActiveAvisos();
-
                         $carouselData =[];
                         $sumInterval = 0;
                         foreach ($avisos as $key => $aviso) {
@@ -97,9 +74,10 @@ $this->title = Yii::$app->params["systemName"];
                         echo Carousel::widget([
                                             'id' => 'myCarousel',
                                             'items' => $carouselData,
-                                            /*'clientOptions' => [
+                                            'options' => [ 'class' => 'slide'],
+                                            'clientOptions' => [
                                                 'interval' => false
-                                                ]*/
+                                                ]
                                         ]);
                 ?>
             </div>
@@ -108,10 +86,31 @@ $this->title = Yii::$app->params["systemName"];
     </div>
 </div>
 
-<?php 
-        $totalInterval = $sumInterval * 1000;
-        $js  = " setTimeout( function() { window.location.reload() }, $totalInterval);";
-        $this->registerJs($js, View::POS_READY, 'refresh-page');
-        $this->registerJsFile("/system/web/js/slides_custom_interval.js", ['depends' => ['\yii\web\JqueryAsset'], 'position' =>  View::POS_READY], 'custom_interval_slides');
-        ?>
+<?php
+if (($sumInterval * 1000) < 30000){
+    $avisosRefresh = 60000;
+}else{
+    $avisosRefresh = $sumInterval * 1000 * 2;
+}
+$script = <<< JS
+$(document).ready(function() {
+    setInterval(function(){ $("#refreshHumores").click(); }, 10000);
+    setInterval(function(){ location.reload(); }, $avisosRefresh);
+});
+JS;
+$this->registerJs($script);
+$js = <<< JS
+$(document).ready(function() {
+    var t;
+    var start = $('#myCarousel').find('div.carousel-inner').find('div.item.active').attr('data-interval');
+    t = setTimeout(function (){ $('#myCarousel').carousel('next'); }, start);
+    $('#myCarousel').on('slid.bs.carousel', function () {   
+        clearTimeout(t);  
+        var duration = $('#myCarousel').find('div.carousel-inner').find('div.item.active').attr('data-interval');
+        t = setTimeout(function(){ $('#myCarousel').carousel('next');}, duration);
+    });
+});
+JS;
+$this->registerJs($js);
+?>
 
