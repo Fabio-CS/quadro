@@ -34,7 +34,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Html::img('@web/images/logo_global simples.png', ['alt'=>'Global Eletronics', 'class' => 'logo_navbar'])." Global Eletronics",
+        'brandLabel' => Html::img('@web/images/logo_global_simples.png', ['alt'=>'Global Eletronics', 'class' => 'logo_navbar'])." Global Eletronics",
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
