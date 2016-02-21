@@ -7,5 +7,6 @@ return [
     'Admin' => 'Administrador',
     'Colab' => 'Colaborador',
     'Dev' => 'Developer',
-    'estadosRuins' => ['Irritado']
+    'estadosRuins' => ['Irritado'],
+    'msgAniversario' => "Global Eletronics deseja a você um feliz aniversário! Parabéns!"
 ];

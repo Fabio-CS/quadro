@@ -110,7 +110,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getImageFile() 
     {
-        return isset($this->foto) ? Yii::$app->params['uploadPath'] . $this->foto : null;
+        return isset($this->foto) && !empty($this->foto) ? Yii::$app->params['uploadPath'] . $this->foto : null;
     }
 
     /**
@@ -120,7 +120,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     public function getImageUrl() 
     {
         // return a default image placeholder if your source avatar is not found
-        $image = isset($this->foto) ? $this->foto : 'default_user.jpg';
+        $image = isset($this->foto) && !empty($this->foto) ? $this->foto : 'default_user.png';
         return Yii::$app->params['uploadPath'] . $image;
     }
 
@@ -288,12 +288,12 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      }
      
      public function getEstadoEmocionalPrincipal(){
-         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d'), 'criado_por' => $this->id_usuario ])->orderBy(["id_estado_emocional" => "SORT_DESC"])->one();
+         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d'), 'criado_por' => $this->id_usuario ])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
          return $estadoEmocional;    
      }
      
      public function getEstadoEmocionalSecundario(){
-         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d')])->andWhere(['not', ['criado_por' => $this->id_usuario]])->orderBy(["id_estado_emocional" => "SORT_DESC"])->one();
+         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d')])->andWhere(['not', ['criado_por' => $this->id_usuario]])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
          return $estadoEmocional;
      }
      

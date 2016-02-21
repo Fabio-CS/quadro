@@ -44,6 +44,11 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             Yii::$app->user->isGuest ?
+                [ 'label' => '' ] : [
+                    'label' => 'Menu Principal',
+                    'url' => Yii::$app->user->identity->getMenu()
+                ],
+            Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/usuarios/login']] :
                 [
                     'label' => 'Logout (' . Yii::$app->user->identity->nome_completo . ')',

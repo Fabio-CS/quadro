@@ -117,7 +117,7 @@ class UsuariosController extends Controller
             $model->modificado_por = Yii::$app->user->getId();
             $model->modificado_em = date('Y-m-d G:i:s');
             if ($model->save()) {
-                if ($image !== false && unlink($oldFile)) {
+                if ($image !== false && $this->deleteFile($oldFile)) {
                     // upload only if valid uploaded file instance found
                     // delete old and overwrite
                     $path = $model->getImageFile();
@@ -213,5 +213,20 @@ class UsuariosController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+    
+    protected function deleteFile($file){
+
+        // check if file exists on server
+        if (empty($file) || !file_exists($file)) {
+            return true;
+        }
+
+        // check if uploaded file can be deleted on server
+        if (!unlink($file)) {
+            return false;
+        }
+
+        return true;
     }
 }
