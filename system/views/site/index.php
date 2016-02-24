@@ -25,17 +25,19 @@ $this->title = Yii::$app->params["systemName"];
                     ?>
                     <li>
                         <div>
-                            <img class="foto-perfil" src="<?= $usuario->getImageUrl() ?>" alt="<?= $usuario->nome_completo ?>" title="<?= $usuario->nome_completo ?>">
+                            <div class="humor-content">
                             <?php 
                                     $estadoEmocionalPrincipal = $usuario->getEstadoEmocionalPrincipal();
                                     if(!empty($estadoEmocionalPrincipal)) { ?>
                                         <img class="estado-emocional" src="<?= $estadoEmocionalPrincipal->getIconeUrl() ?>">
                             <?php   } ?>
                             <?php 
-                                $estadoEmocionalSecundario = $usuario->getEstadoEmocionalSecundario();
-                                if(!empty($estadoEmocionalSecundario)) { ?>
+                                    $estadoEmocionalSecundario = $usuario->getEstadoEmocionalSecundario();
+                                    if(!empty($estadoEmocionalSecundario)) { ?>
                                        <img class="estado-emocional secundario" src="<?= $estadoEmocionalSecundario->getIconeUrl() ?>">
-                          <?php } ?>
+                            <?php   } ?>
+                            </div>
+                            <img class="foto-perfil" src="<?= $usuario->getImageUrl() ?>" alt="<?= $usuario->nome_completo ?>" title="<?= $usuario->nome_completo ?>">
                         </div>
                         <p><?= $usuario->getDisplayName() ?></p>
                     </li>
