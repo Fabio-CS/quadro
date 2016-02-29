@@ -109,6 +109,7 @@ if (($sumInterval * 1000) < 30000){
 $script = <<< JS
 $(document).ready(function() {
     setInterval(function(){ $("#refreshHumores").click(); }, 10000);
+    //setInterval(function(){ $("#refreshHumores").click(); }, 10000000);
     setInterval(function(){ location.reload(); }, $avisosRefresh);
 });
 JS;
