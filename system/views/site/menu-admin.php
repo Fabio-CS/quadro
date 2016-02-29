@@ -26,13 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <p>Avisos</p>
             </a>
         </li>
-  <!--        <li>
+        <li>
             <a href="<?= Url::toRoute(["curtidas/index"])?>">
             <img src="images/curtidas.png">
             <p>Curtidas</p>
             </a>
         </li>
-      <li>
+<!--      <li>
             <a href="<?= Url::toRoute(["graficos/index"])?>">
             <img src="images/graficos.png">
             <p>Gráficos</p>

@@ -38,6 +38,9 @@ $this->title = Yii::$app->params["systemName"];
                             <?php   } ?>
                             </div>
                             <img class="foto-perfil" src="<?= $usuario->getImageUrl() ?>" alt="<?= $usuario->nome_completo ?>" title="<?= $usuario->nome_completo ?>">
+                            <p class="like">
+                                <?=$usuario->totalCurtidasMes?> <img class="like_img" src="images/like.png">
+                            </p>
                         </div>
                         <p><?= $usuario->getDisplayName() ?></p>
                     </li>

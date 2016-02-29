@@ -30,8 +30,8 @@ class Curtidas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario', 'motivo'], 'required'],
-            [['usuario'], 'integer'],
+            [['id_usuario', 'motivo'], 'required'],
+            [['id_usuario'], 'integer'],
             [['motivo'], 'string', 'max' => 500]
         ];
     }

@@ -325,6 +325,23 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      }
      
      /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTotalCurtidasMes()
+    {
+        $curtidas = $this->hasMany(Curtidas::className(), ['id_usuario' => 'id_usuario'])->where(['ativo' => 1])->all();
+        $totalMes = 0;
+        $esteMes = date("m-Y");
+        foreach ($curtidas as $curtida){
+            $criado_em = date_format(date_create($curtida->criado_em), "m-Y");
+            if ($criado_em == $esteMes){
+                $totalMes++;
+            }
+        }
+        return $totalMes;
+    }
+     
+     /**
      * Identity Interface Implementation
      */
     

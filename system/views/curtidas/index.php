@@ -2,12 +2,18 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CurtidasSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Curtidas';
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+} else if (Yii::$app->user->identity->isDev()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Developer', 'url' => Url::toRoute(['site/menu-developer'])];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curtidas-index">

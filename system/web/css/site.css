@@ -325,3 +325,16 @@ a.desc:after {
 .row {
     padding-top: 15px;
 }
+
+.humores-mural li p.like{
+    text-align: center;
+    color: #fff;
+    vertical-align: text-bottom;
+    height: 15%;
+    margin-top: 5%;
+}
+
+.like_img {
+    vertical-align: text-bottom;
+    height: 80%;
+}
