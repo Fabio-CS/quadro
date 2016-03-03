@@ -103,7 +103,7 @@ a.desc:after {
 }
 
 .carousel {
-    height: 650px;
+    height: 590px;
 }
 
 .carousel-inner {
@@ -146,6 +146,7 @@ a.desc:after {
 .site-index .body-content h1{
     text-align: left;
     margin-top: 0;
+    font-size: 2.2vw;
 }
 
 .titulo h1 {
@@ -163,8 +164,7 @@ a.desc:after {
 
 .humores-mural {
     padding-left: 0;
-    height: 650px;
-    min-height: 650px;
+    height: 590px;
 }
 
 .humores-mural li{
@@ -181,7 +181,7 @@ a.desc:after {
 .humores-mural li p{
     text-align: center;
     font-size: 40px;
-    font-size: 1vw;
+    font-size: 0.9vw;
     height: 27%;
     margin-bottom: 0;
     position: relative;

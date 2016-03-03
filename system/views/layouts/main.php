@@ -25,7 +25,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <?php 
     $useragent = Yii::$app->request->userAgent;
-    if (in_array("Android", explode(" ", $useragent))){
+    if (in_array("(iPad;", explode(" ", $useragent))){
         $mobile = true;
     }else{
         $mobile = false;
