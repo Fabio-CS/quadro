@@ -16,7 +16,7 @@ $this->title = Yii::$app->params["systemName"];
     <div class="body-content">
         <div class="row">
             <div class="col-lg-10">
-                <h1>Smileboard</h1>
+                <h1><?=Yii::$app->params["systemName"]?></h1>
                     <?php Pjax::begin(); ?>
                     <ul class="humores-mural">
                     <?= Html::a("", ['site/index'], ['style' => 'display:none', 'id' => 'refreshHumores']);?>
