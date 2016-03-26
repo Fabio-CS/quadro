@@ -49,13 +49,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <img src="images/mensagens.png">
             <p>Mensagens</p>
             </a>
-        </li> 
+        </li> --> 
         <li>
             <a href="<?= Url::toRoute(["periodos-afastamento/index"])?>">
             <img src="images/periodo-afastamento.png">
             <p>Afastamentos</p>
             </a>
-        </li>-->
+        </li>
         <li>
             <a href="<?= Url::toRoute(["usuarios/index"])?>">
             <img src="images/usuarios.png">

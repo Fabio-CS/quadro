@@ -7,21 +7,21 @@ use Yii;
 /**
  * This is the model class for table "periodos_afastamento".
  *
- * @property integer $id_periodo_afastamento
- * @property integer $usuario
- * @property integer $tipo_afastamento
- * @property string $data_inicio
- * @property string $data_fim
- * @property integer $criado_por
- * @property string $criado_em
- * @property integer $modificado_por
- * @property string $modificado_em
- * @property integer $ativo
+ * @property integer    $id_periodo_afastamento
+ * @property integer    $id_usuario
+ * @property integer    $id_tipo_afastamento
+ * @property string     $data_inicio
+ * @property string     $data_fim
+ * @property integer    $criado_por
+ * @property string     $criado_em
+ * @property integer    $modificado_por
+ * @property string     $modificado_em
+ * @property integer    $ativo
  *
- * @property Usuarios $criadoPor
- * @property Usuarios $modificadoPor
- * @property TiposAfastamento $tipoAfastamento
- * @property Usuarios $usuario0
+ * @property Usuarios   $criadoPor
+ * @property Usuarios   $modificadoPor
+ * @property TipoEstadoEmocional $tipoAfastamento
+ * @property Usuarios   $usuario
  */
 class PeriodosAfastamento extends \yii\db\ActiveRecord
 {
@@ -39,8 +39,8 @@ class PeriodosAfastamento extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['usuario', 'tipo_afastamento', 'data_inicio', 'data_fim', 'criado_por'], 'required'],
-            [['usuario', 'tipo_afastamento', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
+            [['id_usuario', 'id_tipo_afastamento', 'data_inicio', 'data_fim', 'criado_por'], 'required'],
+            [['id_usuario', 'id_tipo_afastamento', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
             [['data_inicio', 'data_fim', 'criado_em', 'modificado_em'], 'safe']
         ];
     }
@@ -51,10 +51,10 @@ class PeriodosAfastamento extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_periodo_afastamento' => 'Id Periodo Afastamento',
-            'usuario' => 'Usuario',
-            'tipo_afastamento' => 'Tipo Afastamento',
-            'data_inicio' => 'Data Inicio',
+            'id_periodo_afastamento' => 'Período de Afastamento',
+            'id_usuario' => 'Usuário',
+            'id_tipo_afastamento' => 'Tipo de Afastamento',
+            'data_inicio' => 'Data Início',
             'data_fim' => 'Data Fim',
             'criado_por' => 'Criado Por',
             'criado_em' => 'Criado Em',
@@ -85,14 +85,13 @@ class PeriodosAfastamento extends \yii\db\ActiveRecord
      */
     public function getTipoAfastamento()
     {
-        return $this->hasOne(TiposAfastamento::className(), ['id_tipo_afastamento' => 'tipo_afastamento']);
+        return $this->hasOne(TiposEstadosEmocionais::className(), ['id_tipo_estado_emocional' => 'id_tipo_afastamento']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuario0()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'usuario']);
+        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'id_usuario']);
     }
 }

@@ -18,7 +18,7 @@ class PeriodosAfastamentoSearch extends PeriodosAfastamento
     public function rules()
     {
         return [
-            [['id_periodo_afastamento', 'usuario', 'tipo_afastamento', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
+            [['id_periodo_afastamento', 'id_usuario', 'id_tipo_afastamento', 'criado_por', 'modificado_por', 'ativo'], 'integer'],
             [['data_inicio', 'data_fim', 'criado_em', 'modificado_em'], 'safe'],
         ];
     }
@@ -57,15 +57,15 @@ class PeriodosAfastamentoSearch extends PeriodosAfastamento
 
         $query->andFilterWhere([
             'id_periodo_afastamento' => $this->id_periodo_afastamento,
-            'usuario' => $this->usuario,
-            'tipo_afastamento' => $this->tipo_afastamento,
+            'id_usuario' => $this->id_usuario,
+            'id_tipo_afastamento' => $this->id_tipo_afastamento,
             'data_inicio' => $this->data_inicio,
             'data_fim' => $this->data_fim,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,
             'modificado_por' => $this->modificado_por,
             'modificado_em' => $this->modificado_em,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
         ]);
 
         return $dataProvider;

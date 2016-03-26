@@ -1,13 +1,16 @@
 <?php
 
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PeriodosAfastamento */
 
-$this->title = 'Create Periodos Afastamento';
-$this->params['breadcrumbs'][] = ['label' => 'Periodos Afastamentos', 'url' => ['index']];
+$this->title = 'Inserir Períodos Afastamento';
+if (Yii::$app->user->identity->isAdmin()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+}
+$this->params['breadcrumbs'][] = ['label' => 'Períodos de Afastamentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="periodos-afastamento-create">

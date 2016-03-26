@@ -62,8 +62,15 @@ class PeriodosAfastamentoController extends Controller
     {
         $model = new PeriodosAfastamento();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_periodo_afastamento]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->criado_por = Yii::$app->user->getId();
+             if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_periodo_afastamento]);
+            }else{
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +88,15 @@ class PeriodosAfastamentoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_periodo_afastamento]);
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->modificado_por = Yii::$app->user->getId();
+            $model->modificado_em = date('Y-m-d G:i:s');
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id_periodo_afastamento]);
+            }else{
+                return $this->redirect(['update', 'model' => $model]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -98,9 +112,16 @@ class PeriodosAfastamentoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->modificado_por = Yii::$app->user->getId();
+        $model->modificado_em = date('Y-m-d G:i:s');
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        }
+        Yii::$app->session->setFlash('error', 'Erro ao deletar período de afastamento');
         return $this->redirect(['index']);
+        
     }
 
     /**
