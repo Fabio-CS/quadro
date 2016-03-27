@@ -26,16 +26,20 @@ $this->title = Yii::$app->params["systemName"];
                     <li>
                         <div>
                             <div class="humor-content">
-                            <?php 
-                                    $estadoEmocionalPrincipal = $usuario->getEstadoEmocionalPrincipal();
-                                    if(!empty($estadoEmocionalPrincipal)) { ?>
-                                        <img class="estado-emocional" src="<?= $estadoEmocionalPrincipal->getIconeUrl() ?>">
-                            <?php   } ?>
-                            <?php 
-                                    $estadoEmocionalSecundario = $usuario->getEstadoEmocionalSecundario();
-                                    if(!empty($estadoEmocionalSecundario)) { ?>
-                                       <img class="estado-emocional secundario" src="<?= $estadoEmocionalSecundario->getIconeUrl() ?>">
-                            <?php   } ?>
+                            <?php   $afastamento = $usuario->getActivePeriodosAfastamentos();
+                                    if($afastamento){ ?>
+                                        <img class="estado-emocional" src="<?= $afastamento->tipoAfastamento->getImageUrl() ?>">
+                             <?php  }else{
+                                        $estadoEmocionalPrincipal = $usuario->getEstadoEmocionalPrincipal();
+                                        if(!empty($estadoEmocionalPrincipal)) { ?>
+                                            <img class="estado-emocional" src="<?= $estadoEmocionalPrincipal->getIconeUrl() ?>">
+                                <?php   } ?>
+                                <?php 
+                                        $estadoEmocionalSecundario = $usuario->getEstadoEmocionalSecundario();
+                                        if(!empty($estadoEmocionalSecundario)) { ?>
+                                           <img class="estado-emocional secundario" src="<?= $estadoEmocionalSecundario->getIconeUrl() ?>">
+                                <?php   } 
+                                    } ?>
                             </div>
                             <img class="foto-perfil" src="<?= $usuario->getImageUrl() ?>" alt="<?= $usuario->nome_completo ?>" title="<?= $usuario->nome_completo ?>">
                             <p class="like">

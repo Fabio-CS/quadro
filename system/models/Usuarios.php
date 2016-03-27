@@ -228,6 +228,24 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(PeriodosAfastamento::className(), ['id_usuario' => 'id_usuario']);
     }
+    
+    /**
+     * @return \yii\models\PeriodosAfastamentos
+     * Retorna os períodos de afastamentos ativos
+     */
+    public function getActivePeriodosAfastamentos(){
+       $arrayAvisos = Yii::$app->db->createCommand("SELECT * FROM `periodos_afastamento` where `data_fim` >= cast(now() as date) and `data_inicio` <= cast(now() as date) and `ativo` = 1 and id_usuario = $this->id_usuario order by id_periodo_afastamento DESC limit 1")->queryAll();
+       $periodo = false;
+       foreach ($arrayAvisos as $key => $value) {
+           $periodo = new PeriodosAfastamento();
+           $periodo->id_periodo_afastamento = $value['id_periodo_afastamento'];
+           $periodo->id_usuario = $value['id_usuario'];
+           $periodo->id_tipo_afastamento = $value['id_tipo_afastamento'];
+           $periodo->data_inicio = $value['data_inicio'];
+           $periodo->data_fim = $value['data_fim'];
+       }
+           return $periodo;
+    }
 
     /**
      * @return \yii\db\ActiveQuery

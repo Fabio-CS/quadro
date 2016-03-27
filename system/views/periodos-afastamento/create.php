@@ -6,7 +6,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\PeriodosAfastamento */
 
-$this->title = 'Inserir Períodos Afastamento';
+$this->title = 'Inserir Períodos de Afastamento';
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
 }
