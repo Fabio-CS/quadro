@@ -20,7 +20,7 @@ use Yii;
  * @property Usuarios $criadoPor
  * @property Usuarios $modificadoPor
  * @property TiposEstadosEmocionais $tipoEstadoEmocional
- * @property Usuarios $usuario0
+ * @property Usuarios $usuario returna o usuário do estado emocional
  */
 class EstadosEmocionais extends \yii\db\ActiveRecord
 {
@@ -38,10 +38,11 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tipo_estado_emocional', 'id_usuario', 'data'], 'required'],
+            [['id_tipo_estado_emocional', 'id_usuario', 'data'], 'required', 'on' => 'create'],
             [['id_tipo_estado_emocional', 'id_usuario'], 'integer'],
             [['motivo'], 'string', 'max' => '2000'],
-            [['data'], 'date', 'format' => 'yyyy-mm-dd']
+            [['data'], 'date', 'format' => 'yyyy-mm-dd'],
+            [['id_tipo_estado_emocional', 'id_usuario', 'data'], 'required', 'on' => 'update']
         ];
     }
 
@@ -52,8 +53,8 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     {
         return [
             'id_estado_emocional' => 'ID',
-            'id_tipo_estado_emocional' => 'Tipo Estado Emocional',
-            'id_usuario' => 'Usuario',
+            'id_tipo_estado_emocional' => 'Humor',
+            'id_usuario' => 'Usuário',
             'data' => 'Data',
             'motivo' => 'Motivo',
             'criado_por' => 'Criado Por',

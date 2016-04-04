@@ -5,13 +5,18 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
-$this->title = 'Modificar Estado Emocional: ' . ' ' . $model->id_estado_emocional;
+$this->title = 'Modificar Humor de: ' . ' ' . $model->usuario->nome_completo;
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+    $this->params['breadcrumbs'][] = ['label' => 'Humor', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $model->id_estado_emocional, 'url' => ['view', 'id' => $model->id_estado_emocional]];
+}else if (Yii::$app->user->identity->isColab()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Colaborador', 'url' => Url::toRoute(['site/menu-colaborador'])];
+    $this->params['breadcrumbs'][] = 'Humor';
+    $model->scenario = 'update';
 }
-$this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_estado_emocional, 'url' => ['view', 'id' => $model->id_estado_emocional]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Atualizar';
+
 ?>
 <div class="estados-emocionais-update">
 

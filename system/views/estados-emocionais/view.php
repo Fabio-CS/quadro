@@ -6,12 +6,15 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
-$this->title = $model->id_estado_emocional;
+$this->title = $model->usuario->nome_completo;
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+    $this->params['breadcrumbs'][] = ['label' => 'Humor', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $model->id_estado_emocional, 'url' => ['view', 'id' => $model->id_estado_emocional]];
+}else if (Yii::$app->user->identity->isColab()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Colaborador', 'url' => Url::toRoute(['site/menu-colaborador'])];
+    $this->params['breadcrumbs'][] = 'Humor';
 }
-$this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estados-emocionais-view">
 
@@ -19,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id_estado_emocional], ['class' => 'btn btn-primary']) ?>
+        <?php if(! Yii::$app->user->identity->isColab()) { ?>
         <?= Html::a('Excluir', ['delete', 'id' => $model->id_estado_emocional], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -26,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?php } ?>
     </p>
 
     <?= DetailView::widget([
@@ -50,6 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     <p>
-        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+        <?php if(Yii::$app->user->identity->isColab()) {?>
+        <?= Html::a('Voltar', ['site/menu-colaborador'], ['class' => 'btn btn-primary']) ?>
+        <?php }else { ?>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>    
+        <?php } ?>
     </p>
 </div>

@@ -80,14 +80,20 @@ class EstadosEmocionaisController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
-     * ########### VVVVVVVVVVVV Atualizar Estado emocional durante o dia ######## VVVVVVVVVV
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_estado_emocional]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                $model->sendEmail();
+                return $this->redirect(['view', 'id' => $model->id_estado_emocional]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]); 
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -115,7 +121,7 @@ class EstadosEmocionaisController extends Controller
     public function actionCheckin()
     {
         $model = new EstadosEmocionais();
-
+        
         if (Yii::$app->request->post()) {
             $model->id_tipo_estado_emocional = Yii::$app->request->get("id_tipo_estado_emocional");
             $model->id_usuario = Yii::$app->user->getId();
@@ -130,7 +136,9 @@ class EstadosEmocionaisController extends Controller
             }
             Yii::$app->session->setFlash('error', 'Erro ao realizar o check-in');
             $this->redirect(['usuarios/local']);
-        } 
+        }else if(Yii::$app->user->getIdentity()->getEstadoEmocionalPrincipal()){
+            return $this->render('//site/menu-colaborador');
+        }
         return $this->render('checkin', [
                 'model' => $model,
         ]);

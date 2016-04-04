@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\EstadosEmocionaisSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Estados Emocionais';
+$this->title = 'Humores';
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
 }
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Criar Estado Emocional', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Sugerir Humor', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id_estado_emocional',
             [
                'attribute' => 'tipoEstadoEmocional.nome',
-                'label' => 'Estado Emocional'
+                'label' => 'Humor'
             ],
             [
                 'attribute' => 'usuario.nome_completo',

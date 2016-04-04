@@ -6,12 +6,15 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\EstadosEmocionais */
 
-$this->title = 'Criar Estado Emocional';
+$this->title = 'Sugerir Estado Emocional';
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
+    $this->params['breadcrumbs'][] = ['label' => 'Humor', 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => $model->id_estado_emocional, 'url' => ['view', 'id' => $model->id_estado_emocional]];
+}else if (Yii::$app->user->identity->isColab()){
+    $this->params['breadcrumbs'][] = ['label' => 'Menu Colaborador', 'url' => Url::toRoute(['site/menu-colaborador'])];
+    $this->params['breadcrumbs'][] = 'Sugerir';
 }
-$this->params['breadcrumbs'][] = ['label' => 'Estados Emocionais', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estados-emocionais-create">
 

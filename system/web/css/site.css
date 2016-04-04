@@ -261,18 +261,18 @@ a.desc:after {
     line-height: 1;
 }
 
-.menu-admin{
+.menu-admin, .menu-colaborador{
     text-align: center;
 }
 
-.menu-admin ul{
+.menu-admin ul, .menu-colaborador ul{
     margin-left: auto;
     margin-right: auto;
     display: inline;
     padding-left: 0;
 }
 
-.menu-admin li{
+.menu-admin li, .menu-colaborador li{
     display: inline-block;
     list-style: none;
     background-color: #ccc;
@@ -283,11 +283,11 @@ a.desc:after {
     text-align: center;
 }
 
-.menu-admin li img {
+.menu-admin li img, .menu-colaborador li img{
     width: 90%;
 }
 
-.menu-admin li p{
+.menu-admin li p, .menu-colaborador li p{
     text-align: center;
     font-size: 15px;
     margin-top: 5px;
