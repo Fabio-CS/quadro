@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\helpers\Html;
 use Yii;
 
 /**
@@ -9,7 +10,7 @@ use Yii;
  *
  * @property integer $id_mensagem
  * @property string $texto
- * @property integer $destinatario
+ * @property integer $id_destinatario
  * @property string $lida
  * @property integer $resposta_de
  * @property integer $criado_por
@@ -17,7 +18,7 @@ use Yii;
  * @property integer $ativo
  *
  * @property Usuarios $criadoPor
- * @property Usuarios $destinatario0
+ * @property Usuarios $destinatario
  * @property Mensagens $respostaDe
  * @property Mensagens[] $mensagens
  */
@@ -37,10 +38,12 @@ class Mensagens extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['texto', 'destinatario', 'criado_por'], 'required'],
-            [['destinatario', 'resposta_de', 'criado_por', 'ativo'], 'integer'],
-            [['lida', 'criado_em'], 'safe'],
-            [['texto'], 'string', 'max' => 5000]
+            [['assunto', 'texto', 'id_destinatario'], 'required', 'on' => 'enviar'],
+            [['assunto', 'texto', 'id_destinatario'], 'required', 'on' => 'resposta'],
+            [['id_destinatario', 'resposta_de', 'ativo'], 'integer'],
+            [['resposta_de'], 'required', 'on' => 'resposta'],
+            [['texto'], 'string', 'max' => 5000],
+            [['assunto'], 'string', 'max' => 200]
         ];
     }
 
@@ -50,12 +53,13 @@ class Mensagens extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_mensagem' => 'Id Mensagem',
+            'id_mensagem' => 'ID Mensagem',
+            'assunto' => 'Assunto',
             'texto' => 'Texto',
-            'destinatario' => 'Destinatario',
+            'id_destinatario' => 'Destinatario',
             'lida' => 'Lida',
             'resposta_de' => 'Resposta De',
-            'criado_por' => 'Criado Por',
+            'criado_por' => 'Remetente',
             'criado_em' => 'Criado Em',
             'ativo' => 'Ativo',
         ];
@@ -64,7 +68,7 @@ class Mensagens extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCriadoPor()
+    public function getRemetente()
     {
         return $this->hasOne(Usuarios::className(), ['id_usuario' => 'criado_por']);
     }
@@ -72,9 +76,9 @@ class Mensagens extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDestinatario0()
+    public function getDestinatario()
     {
-        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'destinatario']);
+        return $this->hasOne(Usuarios::className(), ['id_usuario' => 'id_destinatario']);
     }
 
     /**
@@ -92,4 +96,35 @@ class Mensagens extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Mensagens::className(), ['resposta_de' => 'id_mensagem']);
     }
+    
+    public function GetTruncatedMensagemText()
+    {
+        if (strlen($this->texto) <= 100) {
+            return $this->texto;
+        } else {
+            return substr($this->texto, 0, 100) . '...';
+        }
+    }
+    
+    public function getDisplayLida()
+    {
+        if($this->lida){
+            $oDate = new DateTime($this->lida);
+            $value = $oDate->format("d-m-Y - H:i:s");
+        }else{
+            $value = 'Não';
+        }
+        return $value;
+    }
+    
+    public function getOriginalLink()
+    {
+        return Html::a($this->respostaDe->assunto, ['view', 'id' => $this->respostaDe->id_mensagem]);
+    }
+    
+    public function getResponderLink()
+    {
+        return Html::a('Responder', ['reply', 'id' => $this->id_mensagem]);
+    }
+    
 }

@@ -62,7 +62,23 @@ class MensagensController extends Controller
     {
         $model = new Mensagens();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->criado_por = Yii::$app->user->getId();
+            
+            $receivers = $model->id_destinatario;
+            if(count($receivers)>1){
+                    foreach($receivers as $destinatario){
+                            $model2 = new Mensagens();
+                            $model2->attributes = $model->attributes;
+                            $model2->id_destinatario = $destinatario;
+                            $model2->save();
+                    }
+            }else{
+                $model->id_destinatario = $model->id_destinatario[0];
+                if ($model->save()){
+
+                }
+            }
             return $this->redirect(['view', 'id' => $model->id_mensagem]);
         } else {
             return $this->render('create', [
@@ -72,19 +88,25 @@ class MensagensController extends Controller
     }
 
     /**
-     * Updates an existing Mensagens model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Reply an existing Mensagens model.
+     * If reply is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
+    public function actionReply($id)
+    {   
+        $original = $this->findModel($id);
+        $model = new Mensagens();
+        $model->assunto = $original->assunto;
+        $model->resposta_de = $original->id_mensagem;
+        $model->id_destinatario = $original->criado_por;
+        $model->criado_por = Yii::$app->user->getId();
+        
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_mensagem]);
         } else {
-            return $this->render('update', [
+            return $this->render('reply', [
                 'model' => $model,
             ]);
         }

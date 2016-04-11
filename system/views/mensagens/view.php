@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Mensagens */
 
-$this->title = $model->id_mensagem;
+$this->title = $model->assunto;
 $this->params['breadcrumbs'][] = ['label' => 'Mensagens', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,29 +14,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id_mensagem], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id_mensagem], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id_mensagem',
+            'assunto',
             'texto',
-            'destinatario',
-            'lida',
-            'resposta_de',
-            'criado_por',
-            'criado_em',
-            'ativo',
+            [
+                'label' => 'Destinatário',
+                'attribute' => 'destinatario.nome_completo'
+            ],
+            [
+                'label' => 'Lida',
+                'format' => 'raw',
+                'value' => $model->getDisplayLida()
+            ],
+            [
+                'label' => 'Resposta de',
+                'format' => 'raw',
+                'value' => $model->getOriginalLink()
+	    ],
+            [
+                'label' => 'Remetente',
+                'attribute' => 'remetente.nome_completo'
+	    ],
+            [
+                'label' => 'Enviada em',
+                'attribute' => 'criado_em',
+                'format' => ['date', 'dd/MM/Y - H:mm:ss'],
+	    ],
+            [
+                'label' => 'Responder',
+                'format' => 'raw',
+                'value' => $model->getResponderLink()
+            ]
         ],
     ]) ?>
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 
 </div>

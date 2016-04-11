@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'id_mensagem') ?>
+    
+    <?= $form->field($model, 'assunto') ?>
 
     <?= $form->field($model, 'texto') ?>
 

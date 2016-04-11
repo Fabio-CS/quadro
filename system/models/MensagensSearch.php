@@ -19,7 +19,7 @@ class MensagensSearch extends Mensagens
     {
         return [
             [['id_mensagem', 'destinatario', 'resposta_de', 'criado_por', 'ativo'], 'integer'],
-            [['texto', 'lida', 'criado_em'], 'safe'],
+            [['texto', 'lida', 'criado_em', 'assunto'], 'safe'],
         ];
     }
 
@@ -57,15 +57,16 @@ class MensagensSearch extends Mensagens
 
         $query->andFilterWhere([
             'id_mensagem' => $this->id_mensagem,
-            'destinatario' => $this->destinatario,
+            'id_destinatario' => Yii::$app->user->getId(),
             'lida' => $this->lida,
             'resposta_de' => $this->resposta_de,
             'criado_por' => $this->criado_por,
             'criado_em' => $this->criado_em,
-            'ativo' => $this->ativo,
+            'ativo' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'texto', $this->texto]);
+        $query->andFilterWhere(['like', 'assunto', $this->assunto]);
 
         return $dataProvider;
     }
