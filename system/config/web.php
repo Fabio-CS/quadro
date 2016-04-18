@@ -8,6 +8,7 @@ $config = [
     'bootstrap' => ['log'],
     'sourceLanguage'=>'pt-br',
     'language'=>'pt-br',
+    'timeZone' => 'America/Sao_Paulo',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -49,6 +50,12 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'formatter' => [
+            'defaultTimeZone' => 'UTC',
+            'timeZone' => 'America/Sao_Paulo',
+            'dateFormat' => 'php:dd/MM/Y - H:mm:ss',
+            'datetimeFormat'=>'php:d/m/Y - H:m:s'
+        ]
     ],
     'params' => $params,
 ];

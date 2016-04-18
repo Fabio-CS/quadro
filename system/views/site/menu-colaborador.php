@@ -1,9 +1,5 @@
 <?php
     use yii\helpers\Html;
-    use yii\grid\GridView;
-    use app\models\TiposEstadosEmocionais;
-    use app\models\EstadosEmocionais;
-    use yii\data\ActiveDataProvider;
     use yii\helpers\Url;
     
     $this->title = 'Menu Colaborador';
@@ -29,11 +25,11 @@
             <p>Sugerir Humor</p>
             </a>
         </li>
- <!--       <li>
+        <li>
             <a href="<?= Url::toRoute(["mensagens/index"])?>">
             <img src="images/mensagens.png">
             <p>Mensagens</p>
             </a>
-        </li> --> 
+        </li> 
     </ul>
 </div>

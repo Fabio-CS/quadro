@@ -56,7 +56,7 @@ class Mensagens extends \yii\db\ActiveRecord
             'id_mensagem' => 'ID Mensagem',
             'assunto' => 'Assunto',
             'texto' => 'Texto',
-            'id_destinatario' => 'Destinatario',
+            'id_destinatario' => 'Destinatário',
             'lida' => 'Lida',
             'resposta_de' => 'Resposta De',
             'criado_por' => 'Remetente',
@@ -109,11 +109,18 @@ class Mensagens extends \yii\db\ActiveRecord
     public function getDisplayLida()
     {
         if($this->lida){
-            $oDate = new DateTime($this->lida);
-            $value = $oDate->format("d-m-Y - H:i:s");
+            $oDate = new \DateTime($this->lida);
+            $value = $oDate->format('d/m/Y - H:m:s');
         }else{
             $value = 'Não';
         }
+        return $value;
+    }
+    
+    public function getDisplayEnviada()
+    {
+        $oDate = new \DateTime($this->criado_em);
+        $value = $oDate->format('d/m/Y - H:m:s');
         return $value;
     }
     
@@ -127,4 +134,7 @@ class Mensagens extends \yii\db\ActiveRecord
         return Html::a('Responder', ['reply', 'id' => $this->id_mensagem]);
     }
     
+    public function isLida(){
+        return $this->lida ? true : false;
+    }
 }

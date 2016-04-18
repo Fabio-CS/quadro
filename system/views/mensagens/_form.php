@@ -60,5 +60,8 @@ use kartik\widgets\Select2;
     </div>
 
     <?php ActiveForm::end(); ?>
+    <p>
+        <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
+    </p>
 
 </div>

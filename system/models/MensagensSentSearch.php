@@ -10,7 +10,7 @@ use app\models\Mensagens;
 /**
  * MensagensSearch represents the model behind the search form about `app\models\Mensagens`.
  */
-class MensagensSearch extends Mensagens
+class MensagensSentSearch extends Mensagens
 {
     /**
      * @inheritdoc
@@ -58,17 +58,17 @@ class MensagensSearch extends Mensagens
 
         $query->andFilterWhere([
             'id_mensagem' => $this->id_mensagem,
-            'id_destinatario' => Yii::$app->user->getId(),
+            'id_destinatario' => $this->id_destinatario,
             'lida' => $this->lida,
             'resposta_de' => $this->resposta_de,
-            'criado_por' => $this->criado_por,
+            'criado_por' => Yii::$app->user->getId(),
             'criado_em' => $this->criado_em,
             'ativo' => 1,
         ]);
 
         $query->andFilterWhere(['like', 'texto', $this->texto]);
         $query->andFilterWhere(['like', 'assunto', $this->assunto]);
-        
+
         return $dataProvider;
     }
 }

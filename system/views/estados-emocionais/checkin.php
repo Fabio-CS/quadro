@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\TiposEstadosEmocionais;
+use yii\bootstrap\Modal;
+use yii\widgets\Pjax;
 
 
 /* @var $this yii\web\View */
@@ -35,3 +37,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php } ?>
     </ul>
 </div>
+<?php
+Pjax::begin();
+    $mensagem = Yii::$app->user->identity->getMensagensNaoLidas();
+    if($mensagem) {
+       
+        Modal::begin([
+            'id' => 'messageModal',
+            'header' => "<h3>Nova mensagem de: " . $mensagem->remetente->nome_completo . "</h3> <h3>Assunto: " . $mensagem->assunto . "</h3>",
+            'closeButton' => false,
+            'clientOptions' => [
+                'backdrop' => 'static',
+                'keyboard' => false,
+                'show' => true
+            ]
+        ]); ?>
+    <div class="modal-body">
+        <h4><?=$mensagem->texto?></h4>
+    </div>
+    <div class="modal-footer">
+        <?= Html::a("Confirmar Leitura", ['mensagens/read-checkin', 'id' => $mensagem->id_mensagem], ['class' => 'btn btn-success right', 'id' => 'readMessage']);?>
+    </div>
+
+        <?php
+        Modal::end();
+    }
+Pjax::end();
+
+?>

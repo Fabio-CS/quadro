@@ -337,3 +337,13 @@ a.desc:after {
     vertical-align: text-bottom;
     height: 80%;
 }
+
+.bold {
+    font-weight: 900;
+    text-decoration: underline;
+    color: #5cb85c;
+}
+
+.text-center {
+    text-align: center;
+}

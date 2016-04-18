@@ -218,7 +218,15 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      */
     public function getMensagensRecebidas()
     {
-        return $this->hasMany(Mensagens::className(), ['destinatario' => 'id_usuario']);
+        return $this->hasMany(Mensagens::className(), ['id_destinatario' => 'id_usuario']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMensagensNaoLidas()
+    {
+        return $this->hasMany(Mensagens::className(), ['id_destinatario' => 'id_usuario'])->where(['lida' => null])->one();
     }
 
     /**

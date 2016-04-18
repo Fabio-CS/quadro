@@ -10,6 +10,12 @@ $this->title = $model->assunto;
 $this->params['breadcrumbs'][] = ['label' => 'Mensagens', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+    $this->registerJs(
+       '$(".alert").animate({opacity: 1.0}, 3000).fadeOut("slow");',
+       $this::POS_READY, "myHideScript"
+    );
+    ?>
 <div class="mensagens-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -39,8 +45,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	    ],
             [
                 'label' => 'Enviada em',
-                'attribute' => 'criado_em',
-                'format' => ['date', 'dd/MM/Y - H:mm:ss'],
+                'format' => 'raw',
+                'value' => $model->getDisplayEnviada()
 	    ],
             [
                 'label' => 'Responder',
@@ -52,5 +58,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Voltar', ['index'], ['class' => 'btn btn-primary']) ?>
     </p>
+    <?php 
+            if (Yii::$app->session->hasFlash("success")) {
+                echo '<div class="alert alert-success" role="alert">' . Yii::$app->session->getFlash('success') . '</div>';
+            }
+            if (Yii::$app->session->hasFlash("error")) {
+                echo '<div class="alert alert-error" role="alert">' . Yii::$app->session->getFlash('error') . '</div>';
+            }
+    ?>
 
 </div>

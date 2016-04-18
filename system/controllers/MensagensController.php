@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Mensagens;
 use app\models\MensagensSearch;
+use app\models\MensagensSentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,7 @@ class MensagensController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                    'read' => ['post']
                 ],
             ],
         ];
@@ -40,6 +42,21 @@ class MensagensController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    /**
+     * Lists all Mensagens enviadas models.
+     * @return mixed
+     */
+    public function actionSent()
+    {
+        $searchModel = new MensagensSentSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('sent', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single Mensagens model.
@@ -48,8 +65,19 @@ class MensagensController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        if(!$model->isLida()){
+            if($model->id_destinatario == Yii::$app->user->id){
+                $model->lida = date('Y-m-d G:i:s');
+                if($model->save()){
+                    Yii::$app->session->setFlash('success', 'Mensagem marcada como lida com sucesso!');
+                }else{
+                    Yii::$app->session->setFlash('error', 'Erro ao marcar mensagem como lida!');
+                }
+            }
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -71,8 +99,11 @@ class MensagensController extends Controller
                             $model2 = new Mensagens();
                             $model2->attributes = $model->attributes;
                             $model2->id_destinatario = $destinatario;
+                            $model2->criado_por = Yii::$app->user->getId();
+                            $model2->ativo = 1;
                             $model2->save();
                     }
+                return $this->redirect(['sent']);
             }else{
                 $model->id_destinatario = $model->id_destinatario[0];
                 if ($model->save()){
@@ -123,6 +154,48 @@ class MensagensController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+    
+    /**
+     * Reads an existing Mensagens model.
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionRead($id)
+    {
+        $model = $this->findModel($id);
+        $model->lida = date('Y-m-d G:i:s');
+        if($model->save()){
+            Yii::$app->session->setFlash('success', 'Mensagem marcada como lida com sucesso!');
+        }else{
+            Yii::$app->session->setFlash('error', 'Erro ao marcar mensagem como lida!');
+        }
+        $searchModel = new MensagensSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * Reads an existing Mensagens model.
+     * If update is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionReadCheckin($id)
+    {
+        $model = $this->findModel($id);
+        $model->lida = date('Y-m-d G:i:s');
+        if($model->save()){
+            Yii::$app->session->setFlash('success', 'Mensagem marcada como lida com sucesso!');
+        }else{
+            Yii::$app->session->setFlash('error', 'Erro ao marcar mensagem como lida!');
+        }
+        return $this->redirect(["estados-emocionais/checkin"]);
     }
 
     /**
