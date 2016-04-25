@@ -194,6 +194,29 @@ a.desc:after {
     background-color: #FEFEFE;
     border-radius: 0 15px 0 0;
 }
+
+.humores-mural li div.aniversario {
+    border-color: #2969B0;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.humores-mural li div.aniversario img.balloons {
+    position: absolute;
+    width: 20px;
+    top: -18px;
+    right: 2px;
+    z-index: 10;
+}
+
+.humores-mural li div.aniversario img.birthday {
+    position: absolute;
+    width: 20px;
+    top: -15px;
+    left: -10px;
+    z-index: 10;
+}
+
 .humores-mural .foto-perfil{
     width: 90%;
     height: 59%;
@@ -315,10 +338,16 @@ a.desc:after {
 
 .avisos{
     background-color: #fefefe;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 .site-index .body-content .avisos h1{
     text-align: center;
+    color: #fefefe;
+    background-color: #2969B0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .row {
@@ -346,4 +375,13 @@ a.desc:after {
 
 .text-center {
     text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.redware{
+    margin-top: 5px;
+    width: 25px;
 }

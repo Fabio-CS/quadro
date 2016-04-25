@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\GrupoUsuarios */
 
-$this->title = 'Update Grupo Usuarios: ' . ' ' . $model->id_grupo_usuarios;
-$this->params['breadcrumbs'][] = ['label' => 'Grupo Usuarios', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_grupo_usuarios, 'url' => ['view', 'id' => $model->id_grupo_usuarios]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Atualizar Grupo de Usuários: ' . ' ' . $model->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Grupo de Usuários', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Atualizar';
+
 ?>
 <div class="grupo-usuarios-update">
 

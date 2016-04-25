@@ -200,7 +200,7 @@ class Usuarios extends ActiveRecord implements IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getIdGrupoUsuarios()
+    public function getGrupoUsuarios()
     {
         return $this->hasMany(GrupoUsuarios::className(), ['id_grupo_usuarios' => 'id_grupo_usuarios'])->viaTable('grupo_usuarios_has_usuarios', ['id_usuario' => 'id_usuario']);
     }

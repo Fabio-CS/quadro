@@ -9,6 +9,7 @@ use app\models\MensagensSentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\GrupoUsuarios;
 
 /**
  * MensagensController implements the CRUD actions for Mensagens model.
@@ -112,12 +113,43 @@ class MensagensController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->id_mensagem]);
         } else {
+            $model->scenario = "enviar";
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
     }
 
+    /**
+     * Creates a new Mensagens model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionGroup()
+    {
+        $model = new Mensagens();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->criado_por = Yii::$app->user->getId();
+            $group = GrupoUsuarios::findOne($model->id_destinatario);
+            $receivers = $group->usuarios;
+            foreach($receivers as $destinatario){
+                    $model2 = new Mensagens();
+                    $model2->attributes = $model->attributes;
+                    $model2->id_destinatario = $destinatario->id_usuario;
+                    $model2->criado_por = Yii::$app->user->getId();
+                    $model2->ativo = 1;
+                    $model2->save();
+            }
+                return $this->redirect(['sent']);   
+        } else {
+            $model->scenario = "group";
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
     /**
      * Reply an existing Mensagens model.
      * If reply is successful, the browser will be redirected to the 'view' page.

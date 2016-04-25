@@ -39,6 +39,7 @@ class Mensagens extends \yii\db\ActiveRecord
     {
         return [
             [['assunto', 'texto', 'id_destinatario'], 'required', 'on' => 'enviar'],
+            [['assunto', 'texto', 'id_destinatario'], 'required', 'on' => 'group'],
             [['assunto', 'texto', 'id_destinatario'], 'required', 'on' => 'resposta'],
             [['id_destinatario', 'resposta_de', 'ativo'], 'integer'],
             [['resposta_de'], 'required', 'on' => 'resposta'],

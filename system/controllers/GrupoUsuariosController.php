@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\GrupoUsuarios;
 use app\models\GrupoUsuariosSearch;
+use app\models\Usuarios;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * GrupoUsuariosController implements the CRUD actions for GrupoUsuarios model.
@@ -61,9 +63,16 @@ class GrupoUsuariosController extends Controller
     public function actionCreate()
     {
         $model = new GrupoUsuarios();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_grupo_usuarios]);
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $model->criado_por = Yii::$app->user->getId();
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            }else {
+               return $this->render('create', [
+                'model' => $model,
+            ]); 
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,14 +90,53 @@ class GrupoUsuariosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_grupo_usuarios]);
+        if ($model->load(Yii::$app->request->post())) {
+            
+            $model->modificado_por = Yii::$app->user->getId();
+            $model->modificado_em = date('Y-m-d G:i:s');
+            if($model->save()){
+                return $this->redirect(['index']);
+            }else{
+                return $this->redirect(['update', 'model' => $model]);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
     }
+    
+    /**
+     * Updates an existing GrupoUsuarios model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionEdit($id)
+    {
+        $model = $this->findModel($id);
+
+            if (Yii::$app->request->isPost) {
+            $request = Yii::$app->request->post('GrupoUsuarios');
+            $usuarios = [];
+            foreach($request['usuarios'] as $usuario){
+                $usuarios[] = Usuarios::findOne($usuario);
+            }
+            $model->linkAll('usuarios', $usuarios, [], true, true);
+            $model->modificado_por = Yii::$app->user->getId();
+            $model->modificado_em = date('Y-m-d G:i:s');
+            if($model->save()){
+                return $this->redirect(['index']);
+            }else{
+                return $this->render(['include', 'model' => $model]);
+            }
+        } else {
+            return $this->render('include', [
+                'model' => $model,
+            ]);
+        }
+    }
+    
 
     /**
      * Deletes an existing GrupoUsuarios model.
@@ -98,9 +146,16 @@ class GrupoUsuariosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->modificado_por = Yii::$app->user->getId();
+        $model->modificado_em = date('Y-m-d G:i:s');
+        $model->ativo = 0;
+        if($model->save()){
+            return $this->redirect(['index']);
+        } else {
+            Yii::$app->session->setFlash('error', 'Erro ao deletar grupo de usuários');
+            return $this->render(['index']);
+        }
     }
 
     /**

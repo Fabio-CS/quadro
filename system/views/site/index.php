@@ -24,7 +24,11 @@ $this->title = Yii::$app->params["systemName"];
                             foreach ($usuarios as $key => $usuario) {        
                     ?>
                     <li>
-                        <div>
+                        <div class="<?= $usuario->isBirthDay() ? "aniversario" : "" ?>">
+                            <?php if($usuario->isBirthDay()) { ?>
+                                <img src="images/birthday.png" class="birthday">
+                                <img src="images/balloons.png" class="balloons">
+                            <?php } ?>
                             <div class="humor-content">
                             <?php   $afastamento = $usuario->getActivePeriodosAfastamentos();
                                     if($afastamento){ ?>
@@ -58,7 +62,7 @@ $this->title = Yii::$app->params["systemName"];
                 <?php
                         $carouselData =[];
                         $sumInterval = 0;
-                        
+                        /*
                         foreach ($usuarios as $key => $usuario) {
                             if($usuario->isBirthday()){
                                 $item = [];
@@ -71,7 +75,7 @@ $this->title = Yii::$app->params["systemName"];
                                 $carouselData[] = $item;
                             }
                         }
-                        
+                        */
                         foreach ($avisos as $key => $aviso) {
                             $item = [];
                             $sumInterval = $sumInterval + $aviso->tempo_exibicao;
@@ -99,6 +103,10 @@ $this->title = Yii::$app->params["systemName"];
                                         ]);
                 ?>
             </div>
+            <p class="pull-right align-right">
+                <a href="http://www.redware.com.br"><img src="images/redware.png" class="redware"></a>
+            </p>
+            
         </div>
 
     </div>

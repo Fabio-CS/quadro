@@ -34,7 +34,8 @@ if (Yii::$app->user->identity->isAdmin()){
         <?= Html::a(Html::tag('span', ' ', ['class' => 'glyphicon glyphicon-envelope']).'  &nbsp;Enviar Mensagens', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Html::tag('span', ' ', ['class' => 'glyphicon glyphicon-send']).' &nbsp;Mensagens Enviadas', ['sent'], ['class' => 'btn btn-primary']) ?>
         <?php if(Yii::$app->user->identity->isAdmin()) { ?>
-            <!--<?= Html::a(Html::tag('span', ' ', ['class' => 'glyphicon glyphicon-tags']).' &nbsp;Grupo de Mensagens', ['/grupo-usuarios/index'], ['class' => 'btn btn-success']) ?>-->
+            <?= Html::a(Html::tag('span', ' ', ['class' => 'glyphicon glyphicon-tags']).' &nbsp;Grupo de Mensagens', ['/grupo-usuarios/index'], ['class' => 'btn btn-success']) ?>
+            <?= Html::a(Html::tag('span', ' ', ['class' => 'glyphicon glyphicon-list-alt']).' &nbsp;Enviar Mensagens para Grupos', ['group'], ['class' => 'btn btn-primary']) ?>
         <?php } ?>
     </p>
     <h2>Mensagens Recebidas</h2>

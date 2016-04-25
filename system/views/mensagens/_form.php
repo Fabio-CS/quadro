@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Usuarios;
+use app\models\GrupoUsuarios;
 use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
@@ -25,6 +26,16 @@ use kartik\widgets\Select2;
         'multiple' => true
     ],
     ]); ?>
+    
+    <?= $form->field($model, 'assunto')->textInput(['maxlength' => true]) ?>
+    
+    <?php } ?>
+    
+    <?php
+        if($model->scenario == 'group') {
+    ?>
+    <?= $form->field($model, 'id_destinatario')->dropdownList(
+            ArrayHelper::map(GrupoUsuarios::find()->where(['ativo' => 1])->orderBy('nome')->all(), 'id_grupo_usuarios', 'nome'), ['prompt'=>'Selecione o grupo']); ?>
     
     <?= $form->field($model, 'assunto')->textInput(['maxlength' => true]) ?>
     

@@ -12,9 +12,9 @@ if (Yii::$app->user->identity->isAdmin()){
 }else if (Yii::$app->user->identity->isColab()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Colaborador', 'url' => Url::toRoute(['site/menu-colaborador'])];
 }
-$this->params['breadcrumbs'][] = ['label' => 'Mensagens', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Mensagens', 'url' => ['mensagens/index']];
 $this->params['breadcrumbs'][] = $this->title;
-$model->scenario = "enviar";
+
 ?>
 <div class="mensagens-create">
 

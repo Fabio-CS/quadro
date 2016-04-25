@@ -18,11 +18,16 @@ use Yii;
  *
  * @property Usuarios $criadoPor
  * @property Usuarios $modificadoPor
- * @property GrupoUsuariosHasUsuarios[] $grupoUsuariosHasUsuarios
- * @property Usuarios[] $idUsuarios
+ * @property Usuarios[] $usuarios
  */
 class GrupoUsuarios extends \yii\db\ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            \cornernote\linkall\LinkAllBehavior::className(),
+        ];
+    }
     /**
      * @inheritdoc
      */
@@ -37,7 +42,8 @@ class GrupoUsuarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'criado_por'], 'required'],
+            [['nome', 'criado_por'], 'required', 'on' => 'create'],
+            [['nome', 'criado_por'], 'required', 'on' => 'update'],
             [['criado_por', 'modificado_por', 'ativo'], 'integer'],
             [['criado_em', 'modificado_em'], 'safe'],
             [['nome'], 'string', 'max' => 50],
@@ -51,14 +57,15 @@ class GrupoUsuarios extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_grupo_usuarios' => 'Id Grupo Usuarios',
+            'id_grupo_usuarios' => 'Grupo',
             'nome' => 'Nome',
-            'descricao' => 'Descricao',
+            'descricao' => 'Descrição',
             'criado_por' => 'Criado Por',
             'criado_em' => 'Criado Em',
             'modificado_por' => 'Modificado Por',
             'modificado_em' => 'Modificado Em',
             'ativo' => 'Ativo',
+            'usuarios' => 'Usuários'
         ];
     }
 
@@ -81,15 +88,7 @@ class GrupoUsuarios extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getGrupoUsuariosHasUsuarios()
-    {
-        return $this->hasMany(GrupoUsuariosHasUsuarios::className(), ['id_grupo_usuarios' => 'id_grupo_usuarios']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdUsuarios()
+    public function getUsuarios()
     {
         return $this->hasMany(Usuarios::className(), ['id_usuario' => 'id_usuario'])->viaTable('grupo_usuarios_has_usuarios', ['id_grupo_usuarios' => 'id_grupo_usuarios']);
     }

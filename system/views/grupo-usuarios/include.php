@@ -6,8 +6,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\GrupoUsuarios */
 
-$this->title = 'Criar grupo de usuários';
-
+$this->title = 'Incluir usuários em grupo:' ;
 if (Yii::$app->user->identity->isAdmin()){
     $this->params['breadcrumbs'][] = ['label' => 'Menu Administrador', 'url' => Url::toRoute(['site/menu-admin'])];
 }else if (Yii::$app->user->identity->isColab()){
@@ -15,13 +14,14 @@ if (Yii::$app->user->identity->isAdmin()){
 }
     $this->params['breadcrumbs'][] = ['label' => 'Mensagens', 'url' => ['mensagens/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Grupos de Usuários', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Incluir usuários';
+
 ?>
-<div class="grupo-usuarios-create">
+<div class="grupo-usuarios-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('_include', [
         'model' => $model,
     ]) ?>
 
