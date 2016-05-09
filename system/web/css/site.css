@@ -385,3 +385,12 @@ a.desc:after {
     margin-top: 5px;
     width: 25px;
 }
+
+.total-meses{
+    float: left;
+    margin-right: 30px;
+}
+
+.clear{
+    clear: both;
+}

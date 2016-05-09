@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "*",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "kartik-v/yii2-widgets": "*",
-        "cornernote/yii2-linkall": "*"
+        "cornernote/yii2-linkall": "*",
+        "miloschuman/yii2-highcharts-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
