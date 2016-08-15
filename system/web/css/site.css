@@ -399,3 +399,11 @@ a.desc:after {
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.nav > li.TVMural {
+    display: none;
+}
+
+.nav > li.TVMural:hover{
+    display: block;
+}

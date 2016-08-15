@@ -40,35 +40,48 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            Yii::$app->user->isGuest ?
-                [ 'label' => '' ] : [
-                    'label' => 'Menu Principal',
-                    'url' => Yii::$app->user->identity->getMenu()
-                ],
-            Yii::$app->user->isGuest ?
-                ['label' => 'Login', 'url' => ['/usuarios/login']] :
+    if (!Yii::$app->user->isGuest) {
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                Yii::$app->user->identity->isDisplay() ?
+                    [ 'label' => '' ] : [
+                        'label' => 'Menu Principal',
+                        'url' => Yii::$app->user->identity->getMenu()
+                    ],
+                Yii::$app->user->identity->isDisplay() ?
+                    [
+                        'label' => 'Logout',
+                        'url' => ['/usuarios/logout'],
+                        'linkOptions' => ['data-method' => 'post'],
+                        'options' => [
+                            'class' => 'TVMural'
+                        ]
+                    ] :
+                    [
+                        'label' => 'Logout (' . Yii::$app->user->identity->nome_completo . ')',
+                        'url' => ['/usuarios/logout'],
+                        'linkOptions' => ['data-method' => 'post']
+                    ],
                 [
-                    'label' => 'Logout (' . Yii::$app->user->identity->nome_completo . ')',
-                    'url' => ['/usuarios/logout'],
-                    'linkOptions' => ['data-method' => 'post']
+                    'label' => 'Login Local',
+                    'url' => ["/usuarios/local"],
+                    'visible' => $mobile
                 ],
-            [
-                'label' => 'Login Local',
-                'url' => ["/usuarios/local"],
-                'visible' => $mobile
             ],
-        ],
-    ]);
+        ]);   
+    }
     NavBar::end();
     ?>
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+        <?php
+            if (!Yii::$app->user->isGuest) {
+                echo Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]); 
+            }
+        ?>
         <?= $content ?>
     </div>
 </div>
@@ -78,7 +91,16 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-
+<?php
+    $script = <<< JS
+$(document).ready(function() {
+    $('.navbar-collapse').on('mouseover', function(){
+      $('.TVMural').show();  
+    });
+});
+JS;
+$this->registerJs($script);
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -267,88 +267,95 @@ class Usuarios extends ActiveRecord implements IdentityInterface
      * Encontrar o usuário pelo número de matrícula
      * @return Usuario Informações do usuário do banco de dados.
      */
-     public static function findByMatricula($matricula){
-         return Usuarios::find()->where(['num_matricula' => $matricula, 'ativo' => 1])->one();
-     }
-     
-     /**
-      * Validar senha de acordo com o usuário informado.
-      * @return boolean True se a senha está correta.
-      */
-     public function validatePassword($password){
-         if (Yii::$app->getSecurity()->validatePassword($password, $this->senha)){
-             return true;
-         }else{
-             return false;
-         }
-     }
+    public static function findByMatricula($matricula){
+        return Usuarios::find()->where(['num_matricula' => $matricula, 'ativo' => 1])->one();
+    }
 
-     public function isAdmin(){
-         if($this->tipoUsuario->nome === Yii::$app->params['Admin']){
-             return true;
-         }
-         return false;
-     }
-     
-     public function isDev(){
-         if($this->tipoUsuario->nome === Yii::$app->params['Dev']){
-             return true;
-         }
-         return false;
-     }
-     
-     public function isColab(){
-         if($this->tipoUsuario->nome === Yii::$app->params['Colab']){
-             return true;
-         }
-         return false;
-     }
-     
-     public function isBirthday(){
-         $birthday = $this->data_nasc;
-         if(date('m-d') == substr($birthday,5,5) or (date('y')%4 <> 0 and substr($birthday,5,5)=='02-29' and date('m-d')=='02-28')){
-             return true;
-         }else{
-             return false;
-         }
-     }
-     
-     public function getEstadoEmocionalPrincipal(){
-         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d'), 'criado_por' => $this->id_usuario ])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
-         return $estadoEmocional;    
-     }
-     
-     public function getEstadoEmocionalSecundario(){
-         $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d')])->andWhere(['not', ['criado_por' => $this->id_usuario]])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
-         return $estadoEmocional;
-     }
-     
-     public function getDisplayName(){
-        $r = explode(' ', $this->nome_completo);
-	$first = reset($r);
-	$last = end($r);
-	return $first." ".$last;
-     }
-     
-     public function getMenu(){
-         if($this->isAdmin()){
-             return ['site/menu-admin'];
-         }else if($this->isColab()){
-             return ['site/menu-colaborador'];
-         }else if($this->isDev()){
-             return ['site/menu-developer'];
-         }
-         return ['site/index'];
-     }
-     
-     public static function getAdminsEmails(){
-        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere(["tipos_usuario.nome" => Yii::$app->params['Admin']])->all();
-        $emails = array();
-        foreach ($usuarios as $usuario) {
-            $emails[$usuario->email] = $usuario->nome_completo;
+    /**
+     * Validar senha de acordo com o usuário informado.
+     * @return boolean True se a senha está correta.
+     */
+    public function validatePassword($password){
+        if (Yii::$app->getSecurity()->validatePassword($password, $this->senha)){
+            return true;
+        }else{
+            return false;
         }
-        return $emails;    
-     }
+    }
+
+    public function isAdmin(){
+        if($this->tipoUsuario->nome === Yii::$app->params['Admin']){
+            return true;
+        }
+        return false;
+    }
+
+    public function isDev(){
+        if($this->tipoUsuario->nome === Yii::$app->params['Dev']){
+            return true;
+        }
+        return false;
+    }
+
+    public function isColab(){
+        if($this->tipoUsuario->nome === Yii::$app->params['Colab']){
+            return true;
+        }
+        return false;
+    }
+
+    public function isDisplay(){
+        if($this->tipoUsuario->nome === Yii::$app->params['Mural']){
+            return true;
+        }
+        return false;
+    }
+
+    public function isBirthday(){
+        $birthday = $this->data_nasc;
+        if(date('m-d') == substr($birthday,5,5) or (date('y')%4 <> 0 and substr($birthday,5,5)=='02-29' and date('m-d')=='02-28')){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getEstadoEmocionalPrincipal(){
+        $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d'), 'criado_por' => $this->id_usuario ])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
+        return $estadoEmocional;    
+    }
+
+    public function getEstadoEmocionalSecundario(){
+        $estadoEmocional = $this->getEstadosEmocionais()->where(['ativo' => 1, 'data' => date('Y-m-d')])->andWhere(['not', ['criado_por' => $this->id_usuario]])->addOrderBy(["id_estado_emocional" => SORT_DESC])->one();
+        return $estadoEmocional;
+    }
+
+    public function getDisplayName(){
+       $r = explode(' ', $this->nome_completo);
+       $first = reset($r);
+       $last = end($r);
+       return $first." ".$last;
+    }
+
+    public function getMenu(){
+        if($this->isAdmin()){
+            return ['site/menu-admin'];
+        }else if($this->isColab()){
+            return ['site/menu-colaborador'];
+        }else if($this->isDev()){
+            return ['site/menu-developer'];
+        }
+        return ['site/index'];
+    }
+
+    public static function getAdminsEmails(){
+       $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere(["tipos_usuario.nome" => Yii::$app->params['Admin']])->all();
+       $emails = array();
+       foreach ($usuarios as $usuario) {
+           $emails[$usuario->email] = $usuario->nome_completo;
+       }
+       return $emails;    
+    }
      
      /**
      * @return \yii\db\ActiveQuery

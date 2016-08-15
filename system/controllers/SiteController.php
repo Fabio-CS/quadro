@@ -19,7 +19,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['menu-admin', 'menu-colaborador', 'menu-developer'],
+                'only' => ['menu-admin', 'menu-colaborador', 'menu-developer', 'index'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -52,7 +52,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $avisos = Avisos::getActiveAvisos();
-        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
+        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Mural']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
         return $this->render('index', ['usuarios' => $usuarios, 'avisos' => $avisos]);
     }
 
@@ -76,29 +76,6 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
-    
-    public function actionSay($message = 'Hello')
-    {
-        return $this->render('say', ['message' => $message]);
     }
     
     public function actionEntry()
@@ -130,5 +107,10 @@ class SiteController extends Controller
     public function actionMenuDeveloper()
     {
         return $this->render('menu-developer');
+    }
+    
+    public function actionMural()
+    {
+        return $this->render('index');
     }
 }
