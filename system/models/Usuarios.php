@@ -310,6 +310,13 @@ class Usuarios extends ActiveRecord implements IdentityInterface
         }
         return false;
     }
+    
+    public function isTablet(){
+        if($this->tipoUsuario->nome === Yii::$app->params['Tablet']){
+            return true;
+        }
+        return false;
+    }
 
     public function isBirthday(){
         $birthday = $this->data_nasc;
@@ -344,6 +351,8 @@ class Usuarios extends ActiveRecord implements IdentityInterface
             return ['site/menu-colaborador'];
         }else if($this->isDev()){
             return ['site/menu-developer'];
+        }else if($this->isTablet()){
+            return ['usuarios/local'];
         }
         return ['site/index'];
     }

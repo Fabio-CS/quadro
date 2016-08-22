@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\EstadosEmocionais;
 use app\models\EstadosEmocionaisSearch;
+use app\models\LoginForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -132,7 +133,14 @@ class EstadosEmocionaisController extends Controller
                 $model->sendEmail();
                 Yii::$app->session->setFlash('success', 'Check-in de estado emocional realizado com sucesso!');
                 Yii::$app->user->logout();
+                $model = new LoginForm();
+                $model->scenario = "local";
+                $model->matricula = Yii::$app->params['TabletMatricula'];
+                $model->password = Yii::$app->params['TabletSenha'];
+                if ($model->validate()) {
+                    $model->login();
                 return $this->redirect(['usuarios/local', 'msg' => '1']);
+                }
             }
             Yii::$app->session->setFlash('error', 'Erro ao realizar o check-in');
             $this->redirect(['usuarios/local']);

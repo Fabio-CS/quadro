@@ -19,16 +19,16 @@ class UsuariosController extends Controller
     public function behaviors()
     {
         return [
-            /*'access' => [
+            'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['view', 'index', 'create', 'delete', 'update', 'logout'],
+                'only' => ['view', 'index', 'create', 'delete', 'update', 'logout', 'local'],
                 'rules' => [
                     [
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
-            ],*/
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
