@@ -131,7 +131,7 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
     
     }
     
-    public static function getGraficoData($ano){
+    public static function getGraficoMensalData($ano){
        $consulta = "SELECT tipos_estados_emocionais.nome, count(estados_emocionais.id_tipo_estado_emocional) as total, extract(MONTH from estados_emocionais.data) as mes FROM estados_emocionais left outer join tipos_estados_emocionais on estados_emocionais.id_tipo_estado_emocional = tipos_estados_emocionais.id_tipo_estado_emocional WHERE estados_emocionais.ativo = 1 and tipos_estados_emocionais.privado = 0 and YEAR(estados_emocionais.data) = $ano GROUP BY tipos_estados_emocionais.nome, mes ORDER by mes";
        $arrayGrafico = Yii::$app->db->createCommand($consulta)->queryAll();
        $estadosNull = [
@@ -185,6 +185,84 @@ class EstadosEmocionais extends \yii\db\ActiveRecord
        ];
            return $grafico;
     }
+    
+    public static function getGraficoMesData($mes, $ano){
+       $consulta = "SELECT tipos_estados_emocionais.nome, count(estados_emocionais.id_tipo_estado_emocional) as total FROM estados_emocionais left outer join tipos_estados_emocionais on estados_emocionais.id_tipo_estado_emocional = tipos_estados_emocionais.id_tipo_estado_emocional WHERE estados_emocionais.ativo = 1 and tipos_estados_emocionais.privado = 0 and YEAR(estados_emocionais.data) = $ano and MONTH(estados_emocionais.data) = $mes GROUP BY tipos_estados_emocionais.nome";
+       $arrayGrafico = Yii::$app->db->createCommand($consulta)->queryAll();
+       $estadosNull = [
+           'Bom' => 0,
+           'Regular' => 0,
+           'Ruim' => 0
+       ];
+       $meses = [
+               1 => $estadosNull,
+               2 => $estadosNull,
+               3 => $estadosNull,
+               4 => $estadosNull,
+               5 => $estadosNull,
+               6 => $estadosNull,
+               7 => $estadosNull,
+               8 => $estadosNull,
+               9 => $estadosNull,
+               10 => $estadosNull,
+               11 => $estadosNull,
+               12 => $estadosNull
+           ];
+        $mesesNomes = [
+            1 => 'Janeiro',
+            2 => 'Fevereiro',
+            3 => 'Março',
+            4 => 'Abril',
+            5 => 'Maio',
+            6 => 'Junho',
+            7 => 'Julho',
+            8 => 'Agosto',
+            9 => 'Setembro',
+            10 => 'Outubro',
+            11 => 'Novembro',
+            12 => 'Dezembro'
+        ];
+
+       foreach ($arrayGrafico as $key => $value) {
+           $nome  = $value['nome'];
+           $total = $value['total'];
+           $meses[$mes][$nome] = $total;
+       };
+       
+       $arrayCategorias = EstadosEmocionais::clearGraficoArray($meses, $mesesNomes);
+       
+       $arrayData = EstadosEmocionais::arrayByEstado($meses);
+       
+       $grafico = [
+           'categorias' => $arrayCategorias,
+           'data' => $arrayData
+       ];
+           return $grafico;
+    }
+    
+    
+    public static function getGraficoAnoData($ano){
+       $consulta = "SELECT tipos_estados_emocionais.nome, count(estados_emocionais.id_tipo_estado_emocional) as total FROM estados_emocionais left outer join tipos_estados_emocionais on estados_emocionais.id_tipo_estado_emocional = tipos_estados_emocionais.id_tipo_estado_emocional WHERE estados_emocionais.ativo = 1 and tipos_estados_emocionais.privado = 0 and YEAR(estados_emocionais.data) = $ano GROUP BY tipos_estados_emocionais.nome";
+       $arrayGrafico = Yii::$app->db->createCommand($consulta)->queryAll();
+       $dados = [
+           'Bom' => 0,
+           'Regular' => 0,
+           'Ruim' => 0
+       ];
+        
+       foreach ($arrayGrafico as $key => $value) {
+           $nome  = $value['nome'];
+           $total = (int)$value['total'];
+           $dados[$nome] = $total;
+       };
+       
+       $grafico = [
+           'categorias' => $ano,
+           'data' => $dados
+       ];
+           return $grafico;
+    }
+    
     
     protected static function clearGraficoArray($arrayData, $arrayMeses){
         foreach ($arrayData as $key => $value) {
