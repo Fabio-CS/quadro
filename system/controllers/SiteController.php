@@ -52,7 +52,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $avisos = Avisos::getActiveAvisos();
-        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Mural']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
+        $usuarios = Usuarios::find()->innerJoinWith('tipoUsuario')->where(["usuarios.ativo" => 1])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Dev']]])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Mural']]])->andWhere([ 'not', ["tipos_usuario.nome" => Yii::$app->params['Tablet']]])->orderBy(['nome_completo' => 'SORT_ASC'])->all();
         return $this->render('index', ['usuarios' => $usuarios, 'avisos' => $avisos]);
     }
 
